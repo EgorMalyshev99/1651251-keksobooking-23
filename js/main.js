@@ -1,6 +1,6 @@
 import {
   createHotel
-} from './utils/create-hotels.js';
+} from './utils/create-hotel.js';
 
 // Функция, генерирующая случайное число в заданном интервале
 // Источник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random

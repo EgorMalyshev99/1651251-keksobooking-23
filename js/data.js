@@ -1,11 +1,3 @@
-import {
-  getRandomPositiveFloat
-} from './utils/get-random-positive-float.js';
-
-const LOCATION = {
-  lat: getRandomPositiveFloat(35.65, 35.7, 5),
-  lng: getRandomPositiveFloat(139.7, 139.8, 5),
-};
 const BUILDINGS = ["palace", "flat", "house", "bungalow", "hotel"];
 const CHECKTIME = ["12:00", "13:00", "14:00"];
 const TYPEOFROOM = ["standart", "comfort", "luxe", "president"];
@@ -17,7 +9,6 @@ const PHOTOEXAMPLES = [
 ];
 
 export {
-  LOCATION,
   BUILDINGS,
   CHECKTIME,
   TYPEOFROOM,
