@@ -22,11 +22,9 @@ export const shuffleArr = (arr) => {
     [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
   }
 
-  let result = [];
+  // for (let i = 0; i < getRandomPositiveInteger(1, arr.length - 1); i++) {
+  //   result[i] = newArr[i];
+  // }
 
-  for (let i = 0; i < getRandomPositiveInteger(1, arr.length - 1); i++) {
-    result[i] = newArr[i];
-  }
-
-  return result;
+  return newArr.slice(0, getRandomPositiveInteger(0, newArr.length - 1));;
 }
