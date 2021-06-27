@@ -12,7 +12,7 @@ import {
 const hotels = [];
 
 setDisabled();
-setTimeout(setActive, 100);
+setTimeout(setActive, 3000);
 
 for (let index = 0; index < 10; index++) {
   hotels[index] = createHotel(index);
