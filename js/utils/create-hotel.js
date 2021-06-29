@@ -16,19 +16,19 @@ import {
   PHOTOEXAMPLES
 } from '../data.js';
 
-export const createHOTEL = (i) => {
-  const LOCATION = {
+export const createHOTEL = (index) => {
+  const location = {
     lat: getRandomPositiveFloat(35.65, 35.7, 5),
     lng: getRandomPositiveFloat(139.7, 139.8, 5),
   };
 
-  const AUTHOR = {
-    avatar: `img/avatars/user${i+1}.png`,
+  const author = {
+    avatar: `img/avatars/user${index+1}.png`,
   };
 
-  const OFFER = {
-    title: `Отель ${i+1}`,
-    address: `${LOCATION.lat} , ${LOCATION.lng}`,
+  const offer = {
+    title: `Отель ${index+1}`,
+    address: `${location.lat} , ${location.lng}`,
     price: getRandomPositiveInteger(1000, 1000000),
     type: BUILDINGS[getRandomPositiveInteger(0, BUILDINGS.length - 1)],
     rooms: getRandomPositiveInteger(1, 10),
@@ -40,10 +40,10 @@ export const createHOTEL = (i) => {
     photos: growArr(PHOTOEXAMPLES),
   };
 
-  const HOTEL = {
-    AUTHOR,
-    OFFER,
+  const hotel = {
+    author,
+    offer,
   };
 
-  return HOTEL;
+  return hotel;
 };

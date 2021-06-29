@@ -4,23 +4,23 @@ import {
 
 // Функия для генерации массива случайной длинны из значений передаваемого массива (элементы повторяются)
 export const growArr = (arr) => {
-  const NEWARR = [];
+  const newArr = [];
 
-  for (let i = 0; i <= getRandomPositiveInteger(1, 10); i++) {
-    NEWARR[i] = arr[getRandomPositiveInteger(0, arr.length - 1)];
+  for (let index = 0; index <= getRandomPositiveInteger(1, 10); index++) {
+    newArr[index] = arr[getRandomPositiveInteger(0, arr.length - 1)];
   }
 
-  return NEWARR;
+  return newArr;
 };
 
 // Функия для генерации массива случайной длинны из значений передаваемого массива (элементы НЕ повторяются)
 export const shuffleArr = (arr) => {
-  const NEWARR = [...arr];
+  const newArr = [...arr];
 
-  for (let i = NEWARR.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [NEWARR[i], NEWARR[j]] = [NEWARR[j], NEWARR[i]];
+  for (let index = newArr.length - 1; index > 0; index--) {
+    const secondIndex = Math.floor(Math.random() * (index + 1));
+    [newArr[index], newArr[secondIndex]] = [newArr[secondIndex], newArr[index]];
   }
 
-  return NEWARR.slice(0, getRandomPositiveInteger(0, NEWARR.length - 1));
+  return newArr.slice(0, getRandomPositiveInteger(0, newArr.length - 1));
 };
