@@ -3,8 +3,8 @@ import {
 } from './utils/create-hotel.js';
 
 // Генерация 10 отелей и запись их в переменную
-const HOTELS = [];
+const hotels = [];
 
 for (let index = 0; index < 10; index++) {
-  HOTELS[index] = createHotel(index);
+  hotels[index] = createHotel(index);
 }
