@@ -1,13 +1,10 @@
-// Функция, генерирующая случайное число в заданном интервале
-// Источник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-const getRandomNumber = (min, max, num) => {
-  if (min > max || min < 0 || max < 0 || num < 0) {
-    return false;
-    // return console.log("error");
-  }
-  const randomNumber = Math.random() * (max - min) + min;
-  return randomNumber.toFixed(num);
-  // return console.log(finalNomber);
-};
+import {
+  createHotel
+} from './utils/create-hotel.js';
 
-getRandomNumber(1, -1, 4);
+// Генерация 10 отелей и запись их в переменную
+const HOTELS = [];
+
+for (let index = 0; index < 10; index++) {
+  HOTELS[index] = createHotel(index);
+}
