@@ -16,7 +16,7 @@ import {
   PHOTOEXAMPLES
 } from '../data.js';
 
-export const createHOTEL = (index) => {
+export const createHotel = (index) => {
   const location = {
     lat: getRandomPositiveFloat(35.65, 35.7, 5),
     lng: getRandomPositiveFloat(139.7, 139.8, 5),
