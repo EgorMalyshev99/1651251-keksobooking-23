@@ -27,10 +27,10 @@ export const createHotel = (index) => {
       number++;
     }
     if (number < 10) {
-      number = '0' + `${number}`;
+      number = `0${number}`;
     }
     return number;
-  }
+  };
 
   const author = {
     avatar: `img/avatars/user${checkNumeral(index)}.png`,
