@@ -44,7 +44,7 @@ export const createHotel = (index) => {
     rooms: getRandomPositiveInteger(1, 4),
     guests: getRandomPositiveInteger(1, 4),
     checkin: CHECKTIME[getRandomPositiveInteger(0, CHECKTIME.length - 1)],
-    ckeckout: CHECKTIME[getRandomPositiveInteger(0, CHECKTIME.length - 1)],
+    checkout: CHECKTIME[getRandomPositiveInteger(0, CHECKTIME.length - 1)],
     features: shuffleArr(FACILITIES),
     description: TYPEOFROOM[getRandomPositiveInteger(0, TYPEOFROOM.length - 1)],
     photos: growArr(PHOTOEXAMPLES),
