@@ -1,4 +1,5 @@
 const popupInner = document.querySelector('.map');
+const cardTemplate = document.querySelector('#card').content;
 
 export const createPopup = (obj) => {
   const {
@@ -6,20 +7,18 @@ export const createPopup = (obj) => {
     offer,
   } = obj;
 
-  const title = document.createElement('h3');
-  title.className = 'popup__title';
+  const cloneCard = cardTemplate.cloneNode(true);
+
+  const title = cloneCard.querySelector('.popup__title');
   title.textContent = offer.title;
 
-  const address = document.createElement('p');
-  address.className = 'popup__text--address';
+  const address = cloneCard.querySelector('.popup__text--address');
   address.textContent = offer.address;
 
-  const price = document.createElement('p');
-  price.className = 'popup__text--price';
+  const price = cloneCard.querySelector('.popup__text--price');
   price.textContent = `${offer.price} ₽/ночь`;
 
-  const type = document.createElement('h4');
-  type.className = '.popup__type';
+  const type = cloneCard.querySelector('.popup__type');
   switch (offer.type) {
     case 'flat':
       type.textContent = 'Квартира';
@@ -40,16 +39,14 @@ export const createPopup = (obj) => {
       break;
   }
 
-  const capacity = document.createElement('p');
-  capacity.className = 'popup__text--capacity';
+  const capacity = cloneCard.querySelector('.popup__text--capacity');
   capacity.textContent = `${offer.rooms} комнат(ы) для ${offer.guests}`;
 
-  const time = document.createElement('p');
-  time.className = 'popup__text--time';
+  const time = cloneCard.querySelector('.popup__text--time');
   time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
-  const features = document.createElement('ul');
-  features.className = 'popup__features';
+  const features = cloneCard.querySelector('.popup__features');
+  features.innerHTML = '';
   offer.features.forEach((feature) => {
     const featuresItem = document.createElement('li');
     featuresItem.className = `popup__feature popup__feature--${feature}`;
@@ -57,12 +54,11 @@ export const createPopup = (obj) => {
     features.append(featuresItem);
   });
 
-  const description = document.createElement('p');
-  description.className = 'popup__description';
+  const description = cloneCard.querySelector('.popup__description');
   description.textContent = offer.description;
 
-  const photos = document.createElement('div');
-  photos.className = 'popup__photos';
+  const photos = cloneCard.querySelector('.popup__photos');
+  photos.innerHTML = '';
   offer.photos.forEach((photo) => {
     const photosItem = document.createElement('img');
     photosItem.className = 'popup__photo';
@@ -70,13 +66,8 @@ export const createPopup = (obj) => {
     photos.prepend(photosItem);
   });
 
-  const avatar = document.createElement('img');
-  avatar.className = 'popup__avatar';
+  const avatar = cloneCard.querySelector('.popup__avatar');
   avatar.src = author.avatar;
 
-  const popup = document.createElement('article');
-  popup.className = 'popup';
-  popup.append(avatar, title, address, price, type, capacity, time, features, description, photos);
-
-  popupInner.append(popup);
+  popupInner.append(cloneCard);
 };
