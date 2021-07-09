@@ -4,8 +4,15 @@ import {
 import {
   createPopup
 } from './utils/create-popup.js';
+import {
+  setActive,
+  setDisabled
+} from './utils/work-state.js';
 
 const hotels = [];
+
+setDisabled();
+setTimeout(setActive, 100);
 
 for (let index = 0; index < 10; index++) {
   hotels[index] = createHotel(index);
