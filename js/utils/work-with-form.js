@@ -2,7 +2,6 @@ const adForm = document.querySelector('.ad-form');
 const title = document.querySelector('#title');
 const apsType = document.querySelector('#type');
 const appsPrice = document.querySelector('#price');
-const submitBtn = document.querySelector('.ad-form__submit');
 
 export const setValidForm = () => {
 
@@ -10,7 +9,7 @@ export const setValidForm = () => {
   adForm.setAttribute('action', 'https://23.javascript.pages.academy/keksobooking');
   adForm.setAttribute('enctype', 'multipart/form-data');
 
-  apsType.addEventListener('change', (event) => {
+  apsType.addEventListener('change', () => {
     switch (apsType.options[apsType.selectedIndex].value) {
       case 'flat':
         appsPrice.setAttribute('min', 1000);
@@ -49,4 +48,4 @@ export const setValidForm = () => {
       title.setCustomValidity('');
     }
   });
-}
+};

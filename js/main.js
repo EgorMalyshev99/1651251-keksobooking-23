@@ -14,15 +14,15 @@ import {
 
 const hotels = [];
 
-// setDisabled();
-// setTimeout(setActive, 3000);
+setDisabled();
+setTimeout(setActive, 3000);
 
 for (let index = 0; index < 10; index++) {
   hotels[index] = createHotel(index);
 }
 
-// hotels.forEach((hotel) => {
-//   createPopup(hotel);
-// });
+hotels.forEach((hotel) => {
+  createPopup(hotel);
+});
 
 setValidForm();
