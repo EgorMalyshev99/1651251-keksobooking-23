@@ -1,11 +1,10 @@
-const popupInner = document.querySelector('.map');
+const popupWrapper = document.querySelector('.map');
 const cardTemplate = document.querySelector('#card').content;
 
-export const createPopup = (obj) => {
-  const {
-    author,
-    offer,
-  } = obj;
+export const createPopup = ({
+  author,
+  offer,
+}) => {
 
   const cloneCard = cardTemplate.cloneNode(true);
 
@@ -63,11 +62,11 @@ export const createPopup = (obj) => {
     const photosItem = document.createElement('img');
     photosItem.className = 'popup__photo';
     photosItem.src = photo;
-    photos.prepend(photosItem);
+    photos.append(photosItem);
   });
 
   const avatar = cloneCard.querySelector('.popup__avatar');
   avatar.src = author.avatar;
 
-  popupInner.append(cloneCard);
+  popupWrapper.append(cloneCard);
 };
