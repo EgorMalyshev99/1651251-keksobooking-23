@@ -1,16 +1,12 @@
-const adForm = document.querySelector('.ad-form');
-const title = document.querySelector('#title');
 const apsType = document.querySelector('#type');
 const appsPrice = document.querySelector('#price');
+const roomNumber = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
 
 export const setValidForm = () => {
-
-  adForm.setAttribute('method', 'POST');
-  adForm.setAttribute('action', 'https://23.javascript.pages.academy/keksobooking');
-  adForm.setAttribute('enctype', 'multipart/form-data');
-
-  apsType.addEventListener('change', () => {
-    switch (apsType.options[apsType.selectedIndex].value) {
+  // Логика выбора типа жилья
+  apsType.addEventListener('change', (event) => {
+    switch (event.target.value) {
       case 'flat':
         appsPrice.setAttribute('min', 1000);
         appsPrice.setAttribute('placeholder', 1000);
@@ -36,16 +32,81 @@ export const setValidForm = () => {
     }
   });
 
-  title.addEventListener('change', () => {
-    if (title.validity.tooShort) {
-      title.classList.add('error-border');
-      title.setCustomValidity('Заголовок должен состоять минимум из 5-ти символов');
-    } else if (title.validity.tooLong) {
-      title.setCustomValidity('Заголовок не должен превышать 100 символов');
-    } else if (title.validity.valueMissing) {
-      title.setCustomValidity('Обязательное поле');
-    } else {
-      title.setCustomValidity('');
+  // Синхронизация полей «Количество комнат» и «Количество мест»
+  const guests = [...capacity.children];
+  let disabledGuests;
+  let activeGuests;
+
+  window.addEventListener('load', () => { // При загрузке страницы автоматически выбирается кол-во комнат равное 1
+    disabledGuests = guests.filter((guest) => guest.value !== '1');
+    disabledGuests.forEach((guest) => guest.classList.add('hidden'));
+    activeGuests = guests.filter((guest) => guest.value === '1');
+    activeGuests.forEach((guest, index) => {
+      guest.classList.remove('hidden');
+      if (index === 0) {
+        guest.setAttribute('selected', 'true');
+      } else {
+        guest.removeAttribute('selected');
+      }
+    });
+  });
+
+  roomNumber.addEventListener('change', (event) => {
+    switch (event.target.value) {
+      case '1':
+        disabledGuests = guests.filter((guest) => guest.value !== '1');
+        disabledGuests.forEach((guest) => guest.classList.add('hidden'));
+        activeGuests = guests.filter((guest) => guest.value === '1');
+        activeGuests.forEach((guest, index) => {
+          guest.classList.remove('hidden');
+          if (index === 0) {
+            guest.setAttribute('selected', 'true');
+          } else {
+            guest.removeAttribute('selected');
+          }
+        });
+        break;
+      case '2':
+        disabledGuests = guests.filter((guest) => guest.value !== '2' || guest.value !== '1');
+        disabledGuests.forEach((guest) => guest.classList.add('hidden'));
+        activeGuests = guests.filter((guest) => guest.value === '2' || guest.value === '1');
+        activeGuests.forEach((guest, index) => {
+          guest.classList.remove('hidden');
+          if (index === 0) {
+            guest.setAttribute('selected', 'true');
+          } else {
+            guest.removeAttribute('selected');
+          }
+        });
+        break;
+      case '3':
+        disabledGuests = guests.filter((guest) => guest.value === 0);
+        disabledGuests.forEach((guest) => guest.classList.add('hidden'));
+        activeGuests = guests.filter((guest) => guest.value === '3' || guest.value === '2' || guest.value === '1');
+        activeGuests.forEach((guest, index) => {
+          guest.classList.remove('hidden');
+          if (index === 0) {
+            guest.setAttribute('selected', 'true');
+          } else {
+            guest.removeAttribute('selected');
+          }
+        });
+        break;
+      case '100':
+        disabledGuests = guests.filter((guest) => guest.value !== '0');
+        disabledGuests.forEach((guest) => guest.classList.add('hidden'));
+        activeGuests = guests.filter((guest) => guest.value === '0');
+        activeGuests.forEach((guest, index) => {
+          guest.classList.remove('hidden');
+          if (index === 0) {
+            guest.setAttribute('selected', 'selected');
+          } else {
+            guest.removeAttribute('selected');
+          }
+        });
+        break;
+      default:
+        break;
     }
   });
 };
