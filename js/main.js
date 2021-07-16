@@ -1,16 +1,7 @@
-import {
-  createHotel
-} from './utils/create-hotel.js';
-import {
-  createPopup
-} from './utils/create-popup.js';
-import {
-  setActive,
-  setDisabled
-} from './utils/work-state.js';
-import {
-  setValidForm
-} from './utils/work-with-form.js';
+import { createHotel } from './utils/create-hotel.js';
+import { createPopup } from './utils/create-popup.js';
+import { setActive, setDisabled } from './utils/work-state.js';
+import { setValidForm } from './utils/work-with-form.js';
 
 const hotels = [];
 
