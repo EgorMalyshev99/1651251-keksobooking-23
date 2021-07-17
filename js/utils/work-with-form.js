@@ -34,67 +34,33 @@ export const setValidForm = () => {
 
   // Синхронизация полей «Количество комнат» и «Количество мест»
   const guests = [...capacity.children];
-  let disabledGuests;
-  let activeGuests;
+
+  const enableGuests = (arr) => {
+    guests.forEach(guest => {
+      guest.classList.add('hidden');
+    });
+    arr.forEach(element => {
+      guests.forEach(guest => {
+        if (guest.value === element) {
+          guest.classList.remove('hidden');
+        }
+      });
+    });
+  }
 
   roomNumber.addEventListener('change', (event) => {
     switch (event.target.value) {
       case '1':
-        disabledGuests = guests.filter((guest) => guest.value !== '1');
-        disabledGuests.forEach((guest) => {
-          guest.classList.add('hidden');
-          guest.removeAttribute('selected');
-        });
-        activeGuests = guests.filter((guest) => guest.value === '1');
-        activeGuests.forEach((guest, index) => {
-          guest.classList.remove('hidden');
-          if (index === 0) {
-            guest.setAttribute('selected', 'selected');
-          }
-        });
+        enableGuests(['1']);
         break;
       case '2':
-        disabledGuests = guests.filter((guest) => guest.value !== '2' || guest.value !== '1');
-        disabledGuests.forEach((guest) => {
-          guest.classList.add('hidden');
-          guest.removeAttribute('selected');
-        });
-        activeGuests = guests.filter((guest) => guest.value === '2' || guest.value === '1');
-        activeGuests.forEach((guest, index) => {
-          guest.classList.remove('hidden');
-          if (index === 0) {
-            guest.setAttribute('selected', 'selected');
-          }
-        });
+        enableGuests(['1', '2']);
         break;
       case '3':
-        disabledGuests = guests.filter((guest) => guest.value === '0');
-        disabledGuests.forEach((guest) => {
-          guest.classList.add('hidden');
-          guest.removeAttribute('selected');
-        });
-        activeGuests = guests.filter(
-          (guest) => guest.value === '3' || guest.value === '2' || guest.value === '1');
-        activeGuests.forEach((guest, index) => {
-          guest.classList.remove('hidden');
-          if (index === 0) {
-            guest.setAttribute('selected', 'selected');
-          }
-        });
+        enableGuests(['1', '2', '3']);
         break;
       case '100':
-        disabledGuests = guests.filter((guest) => guest.value !== '0');
-        disabledGuests.forEach((guest) => {
-          guest.classList.add('hidden');
-          guest.removeAttribute('selected');
-        });
-        activeGuests = guests.filter((guest) => guest.value === '0');
-        activeGuests.forEach((guest, index) => {
-          guest.classList.remove('hidden');
-          if (index === 0) {
-            guest.setAttribute('selected', 'selected');
-          }
-        });
+        enableGuests(['0']);
         break;
       default:
         break;
