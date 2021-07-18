@@ -1,4 +1,3 @@
-const popupWrapper = document.querySelector('.map');
 const cardTemplate = document.querySelector('#card').content;
 
 export const createPopup = ({
@@ -12,7 +11,7 @@ export const createPopup = ({
   title.textContent = offer.title;
 
   const address = cloneCard.querySelector('.popup__text--address');
-  address.textContent = offer.address;
+  address.textContent = `${offer.address.lat}, ${offer.address.lng}`;
 
   const price = cloneCard.querySelector('.popup__text--price');
   price.textContent = `${offer.price} ₽/ночь`;
@@ -56,17 +55,21 @@ export const createPopup = ({
   const description = cloneCard.querySelector('.popup__description');
   description.textContent = offer.description;
 
-  const photos = cloneCard.querySelector('.popup__photos');
-  photos.innerHTML = '';
-  offer.photos.forEach((photo) => {
-    const photosItem = document.createElement('img');
-    photosItem.className = 'popup__photo';
-    photosItem.src = photo;
-    photos.append(photosItem);
-  });
+  // const photos = cloneCard.querySelector('.popup__photos');
+  // photos.innerHTML = '';
+  // offer.photos.forEach((photo) => {
+  //   const photosItem = document.createElement('img');
+  //   photosItem.className = 'popup__photo';
+  //   photosItem.src = photo;
+  //   photos.append(photosItem);
+  // });
 
   const avatar = cloneCard.querySelector('.popup__avatar');
   avatar.src = author.avatar;
 
+  const popupWrapper = document.createElement('div');
+  popupWrapper.className = 'hotel';
   popupWrapper.append(cloneCard);
+
+  return popupWrapper;
 };

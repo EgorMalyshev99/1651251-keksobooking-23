@@ -38,11 +38,14 @@ export const createHotel = (index) => {
 
   const offer = {
     title: `Отель ${index+1}`,
-    address: `${location.lat} , ${location.lng}`,
-    price: getRandomPositiveInteger(1000, 400000),
+    address: {
+      lat: location.lat,
+      lng: location.lng
+    },
+    price: getRandomPositiveInteger(0, 10000),
     type: BUILDINGS[getRandomPositiveInteger(0, BUILDINGS.length - 1)],
-    rooms: getRandomPositiveInteger(1, 4),
-    guests: getRandomPositiveInteger(1, 4),
+    rooms: getRandomPositiveInteger(1, 3),
+    guests: getRandomPositiveInteger(1, 3),
     checkin: CHECKTIME[getRandomPositiveInteger(0, CHECKTIME.length - 1)],
     checkout: CHECKTIME[getRandomPositiveInteger(0, CHECKTIME.length - 1)],
     features: shuffleArr(FACILITIES),
