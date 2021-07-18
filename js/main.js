@@ -8,6 +8,9 @@ import {
   setActive,
   setDisabled
 } from './utils/work-state.js';
+import {
+  setValidForm
+} from './utils/work-with-form.js';
 
 const hotels = [];
 
@@ -21,3 +24,5 @@ for (let index = 0; index < 10; index++) {
 hotels.forEach((hotel) => {
   createPopup(hotel);
 });
+
+setValidForm();
