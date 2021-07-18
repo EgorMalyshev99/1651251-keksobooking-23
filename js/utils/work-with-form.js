@@ -2,6 +2,8 @@ const apsType = document.querySelector('#type');
 const appsPrice = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const timein = document.querySelector('#timein');
+const timeout = document.querySelector('#timeout');
 
 export const setValidForm = () => {
   // Логика выбора типа жилья
@@ -71,5 +73,36 @@ export const setValidForm = () => {
 
   roomNumber.addEventListener('change', (event) => {
     enableGuests(event.target);
+  });
+
+  // Синхронизация времени заезда и времени выезда
+  const timeinArr = [...timein.children];
+  const timeoutArr = [...timeout.children];
+
+  const conditionTime = (arr, currentTime) => {
+    arr.forEach((time) => {
+      if (time.value === currentTime.value) {
+        time.setAttribute('selected', 'selected');
+      } else {
+        time.removeAttribute('selected');
+      }
+    });
+  };
+
+  const syncTime = (target, str) => {
+    if (str === 'in') {
+      conditionTime(timeoutArr, target);
+    }
+    if (str === 'out') {
+      conditionTime(timeinArr, target);
+    }
+  };
+
+  timein.addEventListener('change', (event) => {
+    syncTime(event.target, 'in');
+  });
+
+  timeout.addEventListener('change', (event) => {
+    syncTime(event.target, 'out');
   });
 };
