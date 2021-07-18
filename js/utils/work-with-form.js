@@ -35,35 +35,41 @@ export const setValidForm = () => {
   // Синхронизация полей «Количество комнат» и «Количество мест»
   const guests = [...capacity.children];
 
-  const enableGuests = (arr) => {
-    guests.forEach(guest => {
-      guest.classList.add('hidden');
-    });
-    arr.forEach(element => {
-      guests.forEach(guest => {
-        if (guest.value === element) {
-          guest.classList.remove('hidden');
-        }
-      });
-    });
-  }
-
-  roomNumber.addEventListener('change', (event) => {
-    switch (event.target.value) {
+  const enableGuests = (target) => {
+    let arr = [];
+    switch (target.value) {
       case '1':
-        enableGuests(['1']);
+        arr = ['1'];
         break;
       case '2':
-        enableGuests(['1', '2']);
+        arr = ['1', '2'];
         break;
       case '3':
-        enableGuests(['1', '2', '3']);
+        arr = ['1', '2', '3'];
         break;
       case '100':
-        enableGuests(['0']);
+        arr = ['0'];
         break;
       default:
         break;
     }
+    guests.forEach((guest, guestIndex) => {
+      guest.classList.add('hidden');
+      guest.removeAttribute('selected');
+      arr.forEach((element, elementIndex) => {
+        if (guest.value === element) {
+          guest.classList.remove('hidden');
+          if (guestIndex === 0) {
+            guest.setAttribute('selected', 'selected');
+          } else if (elementIndex === arr.length - 1 && !guests[guestIndex - 1].hasAttribute('selected')) {
+            guest.setAttribute('selected', 'selected');
+          }
+        }
+      });
+    });
+  };
+
+  roomNumber.addEventListener('change', (event) => {
+    enableGuests(event.target);
   });
 };
