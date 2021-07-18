@@ -6,7 +6,7 @@ const timein = document.querySelector('#timein');
 const timeout = document.querySelector('#timeout');
 
 export const setValidForm = () => {
-  // Логика выбора типа жилья
+  // Логика выбора типа жилья (Задание 8.2)
   apsType.addEventListener('change', (event) => {
     switch (event.target.value) {
       case 'flat':
@@ -34,7 +34,7 @@ export const setValidForm = () => {
     }
   });
 
-  // Синхронизация полей «Количество комнат» и «Количество мест»
+  // Синхронизация полей «Количество комнат» и «Количество мест» (Задание 8.1)
   const guests = [...capacity.children];
 
   const enableGuests = (target) => {
@@ -63,7 +63,10 @@ export const setValidForm = () => {
           guest.classList.remove('hidden');
           if (guestIndex === 0) {
             guest.setAttribute('selected', 'selected');
-          } else if (elementIndex === arr.length - 1 && !guests[guestIndex - 1].hasAttribute('selected')) {
+          } else if (
+            elementIndex === arr.length - 1 &&
+            !guests[guestIndex - 1].hasAttribute('selected')
+          ) {
             guest.setAttribute('selected', 'selected');
           }
         }
@@ -75,7 +78,7 @@ export const setValidForm = () => {
     enableGuests(event.target);
   });
 
-  // Синхронизация времени заезда и времени выезда
+  // Синхронизация времени заезда и времени выезда (Задание 8.2)
   const timeinArr = [...timein.children];
   const timeoutArr = [...timeout.children];
 
