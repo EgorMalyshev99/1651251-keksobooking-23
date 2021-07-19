@@ -5,9 +5,6 @@ import {
   createMap
 } from './utils/create-map.js';
 import {
-  createPopup
-} from './utils/create-popup.js';
-import {
   setDisabled
 } from './utils/work-state.js';
 import {

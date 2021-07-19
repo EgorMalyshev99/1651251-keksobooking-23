@@ -36,76 +36,48 @@ export const setValidForm = () => {
 
   // Синхронизация полей «Количество комнат» и «Количество мест» (Задание 8.1)
   const guests = [...capacity.children];
+  const reversedGuests = guests.reverse();
 
-  const enableGuests = (target) => {
-    let arr = [];
-    switch (target.value) {
-      case '1':
-        arr = ['1'];
-        break;
-      case '2':
-        arr = ['1', '2'];
-        break;
-      case '3':
-        arr = ['1', '2', '3'];
-        break;
-      case '100':
-        arr = ['0'];
-        break;
-      default:
-        break;
-    }
-    guests.forEach((guest, guestIndex) => {
-      guest.classList.add('hidden');
-      guest.removeAttribute('selected');
-      arr.forEach((element, elementIndex) => {
-        if (guest.value === element) {
-          guest.classList.remove('hidden');
-          if (guestIndex === 0) {
-            guest.setAttribute('selected', 'selected');
-          } else if (
-            elementIndex === arr.length - 1 &&
-            !guests[guestIndex - 1].hasAttribute('selected')
-          ) {
-            guest.setAttribute('selected', 'selected');
-          }
+  const enableGuests = (selectedRooms) => {
+    reversedGuests.forEach((guest, index) => {
+      if (index <= selectedRooms && index !== 0 && selectedRooms !== '100') {
+        guest.classList.remove('hidden');
+        if (index === 1) {
+          guest.setAttribute('selected', 'selected');
         }
-      });
+      } else if (index === 0 && selectedRooms === '100') {
+        guest.classList.remove('hidden');
+        guest.setAttribute('selected', 'selected');
+      } else {
+        guest.classList.add('hidden');
+        guest.removeAttribute('selected');
+      }
     });
   };
 
   roomNumber.addEventListener('change', (event) => {
-    enableGuests(event.target);
+    enableGuests(event.target.value);
   });
 
   // Синхронизация времени заезда и времени выезда (Задание 8.2)
   const timeinArr = [...timein.children];
   const timeoutArr = [...timeout.children];
-
-  const conditionTime = (arr, currentTime) => {
-    arr.forEach((time) => {
-      if (time.value === currentTime.value) {
-        time.setAttribute('selected', 'selected');
+  const syncTime = (sel, arr1, arr2, val) => {
+    arr1.forEach((item, index) => {
+      if (item.value !== val) {
+        arr2[index].removeAttribute('selected');
       } else {
-        time.removeAttribute('selected');
+        arr2[index].setAttribute('selected', 'selected');
+        sel.value = val;
       }
     });
   };
 
-  const syncTime = (target, str) => {
-    if (str === 'in') {
-      conditionTime(timeoutArr, target);
-    }
-    if (str === 'out') {
-      conditionTime(timeinArr, target);
-    }
-  };
-
   timein.addEventListener('change', (event) => {
-    syncTime(event.target, 'in');
+    syncTime(timeout, timeinArr, timeoutArr, event.target.value);
   });
 
   timeout.addEventListener('change', (event) => {
-    syncTime(event.target, 'out');
+    syncTime(timein, timeoutArr, timeinArr, event.target.value);
   });
 };

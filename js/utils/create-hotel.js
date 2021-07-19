@@ -40,7 +40,7 @@ export const createHotel = (index) => {
     title: `Отель ${index+1}`,
     address: {
       lat: location.lat,
-      lng: location.lng
+      lng: location.lng,
     },
     price: getRandomPositiveInteger(0, 10000),
     type: BUILDINGS[getRandomPositiveInteger(0, BUILDINGS.length - 1)],

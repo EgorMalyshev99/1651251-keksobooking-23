@@ -2,10 +2,10 @@
 
 import {
   setActive
-} from "./work-state.js";
+} from './work-state.js';
 import {
   createPopup
-} from "./create-popup.js";
+} from './create-popup.js';
 
 export const createMap = (hotelsList) => {
   // Инициализация карты - задание 1
@@ -38,7 +38,7 @@ export const createMap = (hotelsList) => {
   }, {
     draggable: true,
     icon: mainPinIcon,
-  }, );
+  } );
 
   // Добавление главного маркера на карту
   mainPinMarker.addTo(map);
@@ -59,8 +59,8 @@ export const createMap = (hotelsList) => {
 
   // Создание объявления (Выбор адреса) - задание 4
   const addAdMarker = (point) => {
-    let lat = point.lat;
-    let lng = point.lng;
+    const lat = point.lat;
+    const lng = point.lng;
 
     const icon = L.icon({
       iconUrl: '../../img/pin.svg',
@@ -73,10 +73,9 @@ export const createMap = (hotelsList) => {
       lng,
     }, {
       icon,
-    }, );
+    } );
 
-    marker
-      .addTo(map)
+    marker.addTo(map);
   };
   const addAdBtn = document.querySelector('.add-marker');
 
@@ -84,11 +83,11 @@ export const createMap = (hotelsList) => {
     addAdMarker(currentAddress);
   });
 
-  // Добавление на карту "обычных" меток объявлений - задание 5
+  // Добавление на карту 'обычных' меток объявлений - задание 5
   const createMarker = (hotel) => {
     const {
       lat,
-      lng
+      lng,
     } = hotel.offer.address;
 
     const icon = L.icon({
@@ -102,7 +101,7 @@ export const createMap = (hotelsList) => {
       lng,
     }, {
       icon,
-    }, );
+    } );
 
     marker
       .addTo(map)
@@ -112,12 +111,12 @@ export const createMap = (hotelsList) => {
   };
 
   const createAds = (ads) => {
-    ads.forEach(ad => {
+    ads.forEach((ad) => {
       createMarker(ad);
     });
-  }
+  };
 
   window.addEventListener('load', () => {
     createAds(hotelsList);
   });
-}
+};
