@@ -44,6 +44,7 @@ export const setValidForm = () => {
         guest.classList.remove('hidden');
         if (index === 1) {
           guest.setAttribute('selected', 'selected');
+          capacity.value = index;
         }
       } else if (index === 0 && selectedRooms === '100') {
         guest.classList.remove('hidden');
