@@ -29,7 +29,7 @@ export const createMap = (hotelsList) => {
   // Задание 9 пункт 3:
   // Кастомный маркер -
   const mainPinIcon = L.icon({
-    iconUrl: '../../img/main-pin.svg',
+    iconUrl: './img/main-pin.svg',
     iconSize: [52, 52],
     iconAnchor: [26, 52],
   });
@@ -48,20 +48,12 @@ export const createMap = (hotelsList) => {
   // Конец 3го пункта 9го задания
 
   // Выбор адреса - (задание 9 пункт 4)
-  let currentAddress = {
-    lat: 35.68950,
-    lng: 139.69171,
-  };
   mainPinMarker.on('move', (event) => {
     const {
       lat,
       lng,
     } = event.target.getLatLng();
 
-    currentAddress = {
-      lat: lat,
-      lng: lng,
-    };
     address.value = `${lat}, ${lng}`;
   });
 
@@ -70,10 +62,10 @@ export const createMap = (hotelsList) => {
     const {
       lat,
       lng,
-    } = hotel.offer.address;
+    } = hotel.location;
 
     const icon = L.icon({
-      iconUrl: '../../img/pin.svg',
+      iconUrl: './img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
@@ -93,8 +85,6 @@ export const createMap = (hotelsList) => {
   };
 
   const createAds = (ads) => ads.forEach(createAdMarker);
-
-  window.addEventListener('load', () => {
-    createAds(hotelsList);
-  });
+  console.log(hotelsList);
+  createAds(hotelsList);
 };

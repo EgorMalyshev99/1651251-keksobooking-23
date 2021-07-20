@@ -3,6 +3,7 @@ const cardTemplate = document.querySelector('#card').content;
 export const createPopup = ({
   author,
   offer,
+  location
 }) => {
 
   const cloneCard = cardTemplate.cloneNode(true);
@@ -11,7 +12,7 @@ export const createPopup = ({
   title.textContent = offer.title;
 
   const address = cloneCard.querySelector('.popup__text--address');
-  address.textContent = `${offer.address.lat}, ${offer.address.lng}`;
+  address.textContent = `${location.lat}, ${location.lng}`;
 
   const price = cloneCard.querySelector('.popup__text--price');
   price.textContent = `${offer.price} ₽/ночь`;
@@ -45,24 +46,28 @@ export const createPopup = ({
 
   const features = cloneCard.querySelector('.popup__features');
   features.innerHTML = '';
-  offer.features.forEach((feature) => {
-    const featuresItem = document.createElement('li');
-    featuresItem.className = `popup__feature popup__feature--${feature}`;
-    featuresItem.textContent = feature;
-    features.append(featuresItem);
-  });
+  if (offer.features) {
+    offer.features.forEach((feature) => {
+      const featuresItem = document.createElement('li');
+      featuresItem.className = `popup__feature popup__feature--${feature}`;
+      featuresItem.textContent = feature;
+      features.append(featuresItem);
+    });
+  }
 
   const description = cloneCard.querySelector('.popup__description');
   description.textContent = offer.description;
 
   const photos = cloneCard.querySelector('.popup__photos');
   photos.innerHTML = '';
-  offer.photos.forEach((photo) => {
-    const photosItem = document.createElement('img');
-    photosItem.className = 'popup__photo';
-    photosItem.src = photo;
-    photos.append(photosItem);
-  });
+  if (offer.photos) {
+    offer.photos.forEach((photo) => {
+      const photosItem = document.createElement('img');
+      photosItem.className = 'popup__photo';
+      photosItem.src = photo;
+      photos.append(photosItem);
+    });
+  }
 
   const avatar = cloneCard.querySelector('.popup__avatar');
   avatar.src = author.avatar;
