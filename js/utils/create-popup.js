@@ -55,14 +55,14 @@ export const createPopup = ({
   const description = cloneCard.querySelector('.popup__description');
   description.textContent = offer.description;
 
-  // const photos = cloneCard.querySelector('.popup__photos');
-  // photos.innerHTML = '';
-  // offer.photos.forEach((photo) => {
-  //   const photosItem = document.createElement('img');
-  //   photosItem.className = 'popup__photo';
-  //   photosItem.src = photo;
-  //   photos.append(photosItem);
-  // });
+  const photos = cloneCard.querySelector('.popup__photos');
+  photos.innerHTML = '';
+  offer.photos.forEach((photo) => {
+    const photosItem = document.createElement('img');
+    photosItem.className = 'popup__photo';
+    photosItem.src = photo;
+    photos.append(photosItem);
+  });
 
   const avatar = cloneCard.querySelector('.popup__avatar');
   avatar.src = author.avatar;
