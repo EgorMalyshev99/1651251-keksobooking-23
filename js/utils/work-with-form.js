@@ -2,8 +2,11 @@ const apsType = document.querySelector('#type');
 const appsPrice = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const guests = [...capacity.children];
 const timein = document.querySelector('#timein');
+const timeinArr = [...timein];
 const timeout = document.querySelector('#timeout');
+const timeoutArr = [...timeout];
 
 export const setValidForm = () => {
   // Логика выбора типа жилья (Задание 8.2)
@@ -35,8 +38,7 @@ export const setValidForm = () => {
   });
 
   // Синхронизация полей «Количество комнат» и «Количество мест» (Задание 8.1)
-  const guests = [...capacity.children];
-  const reversedGuests = guests.reverse();
+  const reversedGuests = guests.slice().reverse();
 
   const enableGuests = (selectedRooms) => {
     reversedGuests.forEach((guest, index) => {
@@ -61,24 +63,31 @@ export const setValidForm = () => {
   });
 
   // Синхронизация времени заезда и времени выезда (Задание 8.2)
-  const timeinArr = [...timein.children];
-  const timeoutArr = [...timeout.children];
-  const syncTime = (sel, arr1, arr2, val) => {
-    arr1.forEach((item, index) => {
-      if (item.value !== val) {
-        arr2[index].removeAttribute('selected');
+  const syncTime = (val, currentSelect) => {
+    let anotherSelect;
+    let anotherOptions;
+    if (currentSelect === 'in') {
+      anotherSelect = timeout;
+      anotherOptions = timeoutArr;
+    } else if (currentSelect === 'out') {
+      anotherSelect = timein;
+      anotherOptions = timeinArr;
+    }
+    anotherSelect.value = val;
+    anotherOptions.forEach(time => {
+      if (time.value !== val) {
+        time.removeAttribute('selected');
       } else {
-        arr2[index].setAttribute('selected', 'selected');
-        sel.value = val;
+        time.setAttribute('selected', 'selected');
       }
     });
   };
 
   timein.addEventListener('change', (event) => {
-    syncTime(timeout, timeinArr, timeoutArr, event.target.value);
+    syncTime(event.target.value, 'in');
   });
 
   timeout.addEventListener('change', (event) => {
-    syncTime(timein, timeoutArr, timeinArr, event.target.value);
+    syncTime(event.target.value, 'out');
   });
 };
