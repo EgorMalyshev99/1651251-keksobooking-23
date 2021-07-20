@@ -3,7 +3,7 @@ import {
 } from './utils/create-map.js';
 import {
   getData
-} from './utils/requsts.js';
+} from './utils/requests.js';
 import {
   setDisabled
 } from './utils/work-state.js';
@@ -16,7 +16,7 @@ const fetchHotels = getData(
     createMap(hotels);
   },
   (err) => {
-    console.log(err);
+    console.log(err); // Здесь будет функция, вызывающая сообщение для пользователя
   },
 );
 

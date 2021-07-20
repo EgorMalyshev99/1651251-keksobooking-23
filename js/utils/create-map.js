@@ -85,6 +85,6 @@ export const createMap = (hotelsList) => {
   };
 
   const createAds = (ads) => ads.forEach(createAdMarker);
-  console.log(hotelsList);
+  // console.log(hotelsList);
   createAds(hotelsList);
 };

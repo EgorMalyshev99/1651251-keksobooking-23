@@ -3,7 +3,7 @@ const cardTemplate = document.querySelector('#card').content;
 export const createPopup = ({
   author,
   offer,
-  location
+  location,
 }) => {
 
   const cloneCard = cardTemplate.cloneNode(true);

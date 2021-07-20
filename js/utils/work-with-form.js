@@ -74,7 +74,7 @@ export const setValidForm = () => {
       anotherOptions = timeinArr;
     }
     anotherSelect.value = val;
-    anotherOptions.forEach(time => {
+    anotherOptions.forEach((time) => {
       if (time.value !== val) {
         time.removeAttribute('selected');
       } else {
