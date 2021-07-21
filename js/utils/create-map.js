@@ -8,16 +8,27 @@ import {
 } from './create-popup.js';
 
 const address = document.querySelector('#address');
+const defaultCoordinates = {
+  defaultLat: 35.68950,
+  defaultLng: 139.69171,
+}; // Адрес по умолчанию
 
 export const createMap = (hotelsList) => {
+  const {
+    defaultLat,
+    defaultLng,
+  } = defaultCoordinates;
+
+  address.value = `${defaultLat}, ${defaultLng}`;
+
   // Инициализация карты - (задание 9 пункт 2)
   const map = L.map('map-canvas')
     .on('load', () => {
       setActive();
     })
     .setView({
-      lat: 35.68950,
-      lng: 139.69171,
+      lat: defaultLat,
+      lng: defaultLng,
     }, 12);
 
   L.tileLayer(
@@ -26,26 +37,23 @@ export const createMap = (hotelsList) => {
     },
   ).addTo(map);
 
-  // Задание 9 пункт 3:
+  /* Задание 9 пункт 3: */
   // Кастомный маркер -
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
     iconSize: [52, 52],
     iconAnchor: [26, 52],
   });
-
   // Инициализация главного маркера
   const mainPinMarker = L.marker({
-    lat: 35.68950,
-    lng: 139.69171,
+    lat: defaultLat,
+    lng: defaultLng,
   }, {
     draggable: true,
     icon: mainPinIcon,
   });
-
   // Добавление главного маркера на карту
   mainPinMarker.addTo(map);
-  // Конец 3го пункта 9го задания
 
   // Выбор адреса - (задание 9 пункт 4)
   mainPinMarker.on('move', (event) => {
@@ -85,6 +93,5 @@ export const createMap = (hotelsList) => {
   };
 
   const createAds = (ads) => ads.forEach(createAdMarker);
-  // console.log(hotelsList);
   createAds(hotelsList);
 };

@@ -33,6 +33,4 @@ export const setActive = () => {
       element.removeAttribute('disabled', 'true');
     }
   });
-
-
 };
