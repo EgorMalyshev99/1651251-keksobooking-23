@@ -908,25 +908,24 @@ fieldset {
 }
 
 .popup__photos {
-  display: -webkit-box;
-  display: -ms-flexbox;
+  overflow-x: scroll;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .popup__photo {
+  max-width: 70px;
+  max-height: 70px;
   margin-right: 5px;
   margin-bottom: 5px;
+}
+
+.popup__photo+.popup__photo {
+  margin-left: 4px;
 }
 
 .popup__photo:hover {
   border: 2px solid #ff5635;
 }
-
 
 /**
  * Сообщения об успешном и неуспешном создании объявления

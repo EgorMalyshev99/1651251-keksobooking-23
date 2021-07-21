@@ -2,8 +2,11 @@ const apsType = document.querySelector('#type');
 const appsPrice = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const guests = [...capacity.children];
 const timein = document.querySelector('#timein');
+const timeinArr = [...timein];
 const timeout = document.querySelector('#timeout');
+const timeoutArr = [...timeout];
 
 export const setValidForm = () => {
   // Логика выбора типа жилья (Задание 8.2)
@@ -11,23 +14,23 @@ export const setValidForm = () => {
     switch (event.target.value) {
       case 'flat':
         appsPrice.setAttribute('min', 1000);
-        appsPrice.setAttribute('placeholder', 'от 1000 у.е.');
+        appsPrice.setAttribute('placeholder', 'от 1000 ₽');
         break;
       case 'bungalow':
         appsPrice.setAttribute('min', 0);
-        appsPrice.setAttribute('placeholder', 'от 0 у.е.');
+        appsPrice.setAttribute('placeholder', 'от 0 ₽');
         break;
       case 'house':
         appsPrice.setAttribute('min', 5000);
-        appsPrice.setAttribute('placeholder', 'от 5000 у.е.');
+        appsPrice.setAttribute('placeholder', 'от 5000 ₽');
         break;
       case 'palace':
         appsPrice.setAttribute('min', 10000);
-        appsPrice.setAttribute('placeholder', 'от 10000 у.е.');
+        appsPrice.setAttribute('placeholder', 'от 10000 ₽');
         break;
       case 'hotel':
         appsPrice.setAttribute('min', 3000);
-        appsPrice.setAttribute('placeholder', 'от 3000 у.е.');
+        appsPrice.setAttribute('placeholder', 'от 3000 ₽');
         break;
       default:
         break;
@@ -35,77 +38,56 @@ export const setValidForm = () => {
   });
 
   // Синхронизация полей «Количество комнат» и «Количество мест» (Задание 8.1)
-  const guests = [...capacity.children];
+  const reversedGuests = guests.slice().reverse();
 
-  const enableGuests = (target) => {
-    let arr = [];
-    switch (target.value) {
-      case '1':
-        arr = ['1'];
-        break;
-      case '2':
-        arr = ['1', '2'];
-        break;
-      case '3':
-        arr = ['1', '2', '3'];
-        break;
-      case '100':
-        arr = ['0'];
-        break;
-      default:
-        break;
-    }
-    guests.forEach((guest, guestIndex) => {
-      guest.classList.add('hidden');
-      guest.removeAttribute('selected');
-      arr.forEach((element, elementIndex) => {
-        if (guest.value === element) {
-          guest.classList.remove('hidden');
-          if (guestIndex === 0) {
-            guest.setAttribute('selected', 'selected');
-          } else if (
-            elementIndex === arr.length - 1 &&
-            !guests[guestIndex - 1].hasAttribute('selected')
-          ) {
-            guest.setAttribute('selected', 'selected');
-          }
+  const enableGuests = (selectedRooms) => {
+    reversedGuests.forEach((guest, index) => {
+      if (index <= selectedRooms && index !== 0 && selectedRooms !== '100') {
+        guest.classList.remove('hidden');
+        if (index === 1) {
+          guest.setAttribute('selected', 'selected');
+          capacity.value = index;
         }
-      });
-    });
-  };
-
-  roomNumber.addEventListener('change', (event) => {
-    enableGuests(event.target);
-  });
-
-  // Синхронизация времени заезда и времени выезда (Задание 8.2)
-  const timeinArr = [...timein.children];
-  const timeoutArr = [...timeout.children];
-
-  const conditionTime = (arr, currentTime) => {
-    arr.forEach((time) => {
-      if (time.value === currentTime.value) {
-        time.setAttribute('selected', 'selected');
+      } else if (index === 0 && selectedRooms === '100') {
+        guest.classList.remove('hidden');
+        guest.setAttribute('selected', 'selected');
       } else {
-        time.removeAttribute('selected');
+        guest.classList.add('hidden');
+        guest.removeAttribute('selected');
       }
     });
   };
 
-  const syncTime = (target, str) => {
-    if (str === 'in') {
-      conditionTime(timeoutArr, target);
+  roomNumber.addEventListener('change', (event) => {
+    enableGuests(event.target.value);
+  });
+
+  // Синхронизация времени заезда и времени выезда (Задание 8.2)
+  const syncTime = (val, currentSelect) => {
+    let anotherSelect;
+    let anotherOptions;
+    if (currentSelect === 'in') {
+      anotherSelect = timeout;
+      anotherOptions = timeoutArr;
+    } else if (currentSelect === 'out') {
+      anotherSelect = timein;
+      anotherOptions = timeinArr;
     }
-    if (str === 'out') {
-      conditionTime(timeinArr, target);
-    }
+    anotherSelect.value = val;
+    anotherOptions.forEach((time) => {
+      if (time.value !== val) {
+        time.removeAttribute('selected');
+      } else {
+        time.setAttribute('selected', 'selected');
+      }
+    });
   };
 
   timein.addEventListener('change', (event) => {
-    syncTime(event.target, 'in');
+    syncTime(event.target.value, 'in');
   });
 
   timeout.addEventListener('change', (event) => {
-    syncTime(event.target, 'out');
+    syncTime(event.target.value, 'out');
   });
 };

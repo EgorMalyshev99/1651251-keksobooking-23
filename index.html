@@ -4,8 +4,9 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
 
@@ -120,7 +121,7 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
           <!--Ограничения на вводимые данные по цене за ночь (Задание 8.1)-->
-          <input id="price" name="price" type="number" placeholder="от 0 у.е." max="1000000" step="100" required>
+          <input id="price" name="price" type="number" placeholder="от 0 ₽" max="1000000" step="100" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -258,6 +259,10 @@
     </div>
   </template>
 
+  <!-- Сообщение об ошибке загрузки данных с сервера -->
+  <template id="error-downloading"></template>
+
+  <script defer src="./leaflet/leaflet.js"></script>
   <script defer type="module" src="./js/main.js"></script>
 </body>
 

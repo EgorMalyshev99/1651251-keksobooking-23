@@ -1,28 +1,26 @@
 import {
-  createHotel
-} from './utils/create-hotel.js';
+  createMap
+} from './utils/create-map.js';
 import {
-  createPopup
-} from './utils/create-popup.js';
+  getData
+} from './utils/requests.js';
 import {
-  setActive,
   setDisabled
 } from './utils/work-state.js';
 import {
   setValidForm
 } from './utils/work-with-form.js';
 
-const hotels = [];
+const fetchHotels = getData(
+  (hotels) => {
+    createMap(hotels);
+  },
+  (err) => {
+    console.log(err); // Здесь будет функция, вызывающая сообщение для пользователя
+  },
+);
 
 setDisabled();
-setTimeout(setActive, 3000);
-
-for (let index = 0; index < 10; index++) {
-  hotels[index] = createHotel(index);
-}
-
-hotels.forEach((hotel) => {
-  createPopup(hotel);
-});
-
 setValidForm();
+getData();
+fetchHotels();
