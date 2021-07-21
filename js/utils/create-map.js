@@ -68,14 +68,14 @@ export const createMap = (hotelsList) => {
 
       address.value = `${lat}, ${lng}`;
     });
-  }
+  };
 
-  if (map == undefined) {
+  if (map === undefined) {
     initMap();
   }
 
   if (markers) {
-    markers.forEach(item => {
+    markers.forEach((item) => {
       map.removeLayer(item);
     });
   }
@@ -111,7 +111,6 @@ export const createMap = (hotelsList) => {
     markers.push(marker);
   };
 
-  console.log(hotelsList);
   const createAds = (ads) => {
     ads.forEach(createAdMarker);
   };

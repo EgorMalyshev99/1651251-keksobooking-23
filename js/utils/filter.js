@@ -1,6 +1,6 @@
 import {
   createMap
-} from "./create-map.js";
+} from './create-map.js';
 
 const typeSel = document.querySelector('#housing-type');
 const price = document.querySelector('#housing-price');
@@ -9,11 +9,10 @@ const guests = document.querySelector('#housing-guests');
 
 export const activateFilter = (hotels) => {
   let filteredHotels = hotels;
-  let finalHotels;
 
   typeSel.addEventListener('change', (evt) => {
     if (evt.target.value !== 'any') {
-      filteredHotels = hotels.filter(hotel => hotel.offer.type === evt.target.value);
+      filteredHotels = hotels.filter((hotel) => hotel.offer.type === evt.target.value);
       createMap(filteredHotels);
     } else {
       createMap(hotels);
@@ -24,13 +23,13 @@ export const activateFilter = (hotels) => {
     if (evt.target.value !== 'any') {
       switch (evt.target.value) {
         case 'low':
-          filteredHotels = hotels.filter(hotel => Number(hotel.offer.price) <= 10000);
+          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) <= 10000);
           break;
         case 'middle':
-          filteredHotels = hotels.filter(hotel => Number(hotel.offer.price) >= 10000 && Number(hotel.offer.price) <= 50000);
+          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) >= 10000 && Number(hotel.offer.price) <= 50000);
           break;
         case 'high':
-          filteredHotels = hotels.filter(hotel => Number(hotel.offer.price) >= 50000);
+          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) >= 50000);
           break;
         default:
           break;
@@ -43,8 +42,7 @@ export const activateFilter = (hotels) => {
 
   rooms.addEventListener('change', (evt) => {
     if (evt.target.value !== 'any') {
-      filteredHotels = hotels.filter(hotel => hotel.offer.rooms === Number(evt.target.value));
-      console.log(filteredHotels);
+      filteredHotels = hotels.filter((hotel) => hotel.offer.rooms === Number(evt.target.value));
       createMap(filteredHotels);
     } else {
       createMap(hotels);
@@ -55,18 +53,17 @@ export const activateFilter = (hotels) => {
     if (evt.target.value !== 'any') {
       switch (evt.target.value) {
         case '0':
-          filteredHotels = hotels.filter(hotel => hotel.offer.guests > 2);
+          filteredHotels = hotels.filter((hotel) => hotel.offer.guests > 2);
           break;
         case '1':
-          filteredHotels = hotels.filter(hotel => hotel.offer.guests === 1);
+          filteredHotels = hotels.filter((hotel) => hotel.offer.guests === 1);
           break;
         case '2':
-          filteredHotels = hotels.filter(hotel => hotel.offer.guests === 2);
+          filteredHotels = hotels.filter((hotel) => hotel.offer.guests === 2);
           break;
         default:
           break;
       }
-      console.log(filteredHotels);
       createMap(filteredHotels);
     } else {
       createMap(hotels);
