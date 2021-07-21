@@ -2,8 +2,8 @@ import {
   getData
 } from './utils/requests.js';
 import {
-  getDataFail,
-  getDataSuccess
+  onGetDataFail,
+  onGetDataSuccess
 } from './utils/data-events.js';
 import {
   setDisabled
@@ -16,6 +16,6 @@ import {
 
 setDisabled(); // Дизейблим форму
 setValidForm(); // Подключаем валидацию формы
-getData(getDataSuccess, getDataFail); // Получаем данные отелей с сервера
+getData(onGetDataSuccess, onGetDataFail); // Получаем данные отелей с сервера
 setUserFormSubmit(); // Установка новой логики отправки формы объявления
 setUserFormReset(); // Установка новой логики сброса формы объявления

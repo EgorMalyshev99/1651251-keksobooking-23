@@ -2,8 +2,8 @@ import {
   postData
 } from './requests.js';
 import {
-  sentDataFail,
-  sentDataSuccess
+  onSentDataFail,
+  onSentDataSuccess
 } from './data-events.js';
 
 const avatar = document.querySelector('#avatar');
@@ -178,8 +178,8 @@ export const setUserFormSubmit = () => {
     adFormSubmit.setAttribute('disabled', '');
 
     postData(
-      sentDataSuccess,
-      sentDataFail,
+      onSentDataSuccess,
+      onSentDataFail,
       new FormData(evt.target),
     );
   });

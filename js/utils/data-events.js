@@ -2,6 +2,9 @@ import {
   createMap
 } from './create-map.js';
 import {
+  activateFilter
+} from './filter.js';
+import {
   getData,
   postData
 } from './requests.js';
@@ -16,12 +19,13 @@ const messageWrapper = document.querySelector('body');
 const adFormSubmit = document.querySelector('.ad-form__submit');
 
 // Успешное получение данных
-export const getDataSuccess = (data) => {
+export const onGetDataSuccess = (data) => {
   createMap(data); // Создаем карту с полученными данными
+  activateFilter(data); // Активируем фильтр
 };
 
 // Ошибка получения данных
-export const getDataFail = () => {
+export const onGetDataFail = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.error-downloading')) {
     messageWrapper.prepend(errorDownloadMessage);
@@ -38,12 +42,12 @@ export const getDataFail = () => {
   // Скрываем сообщение и пытаемся получить данные ещё раз
   downloadBtn.addEventListener('click', () => {
     errDownloadContent.classList.add('hidden');
-    getData(getDataSuccess, getDataFail);
+    getData(onGetDataSuccess, onGetDataFail);
   });
 };
 
 // Успешная отправка данных
-export const sentDataSuccess = () => {
+export const onSentDataSuccess = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.success')) {
     messageWrapper.prepend(successPostMessage);
@@ -79,7 +83,7 @@ export const sentDataSuccess = () => {
 };
 
 // Ошибка отправки данных
-export const sentDataFail = () => {
+export const onSentDataFail = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.error')) {
     messageWrapper.prepend(errorPostMessage);
@@ -96,6 +100,6 @@ export const sentDataFail = () => {
   // Скрываем сообщение и пытаемся отправить данные ещё раз
   errBtn.addEventListener('click', () => {
     errContent.classList.add('hidden');
-    postData(sentDataSuccess, sentDataFail);
+    postData(onSentDataSuccess, onSentDataFail);
   });
 };
