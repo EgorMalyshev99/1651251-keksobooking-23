@@ -1,3 +1,4 @@
+// Фильтр
 import {
   createMap
 } from './create-map.js';
