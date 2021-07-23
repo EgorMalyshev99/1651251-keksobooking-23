@@ -7,6 +7,7 @@ import {
 } from './data-events.js';
 
 const avatar = document.querySelector('#avatar');
+const avatarWrap = document.querySelector('.ad-form-header__preview');
 const title = document.querySelector('#title');
 const address = document.querySelector('#address');
 const apsType = document.querySelector('#type');
@@ -29,7 +30,7 @@ const adFormSubmit = document.querySelector('.ad-form__submit');
 const userFormReset = document.querySelector('.ad-form__reset');
 
 export const setValidForm = () => {
-  // Логика выбора типа жилья (Задание 8.2)
+  // Логика выбора типа жилья
   apsType.addEventListener('change', (event) => {
     switch (event.target.value) {
       case 'flat':
@@ -62,7 +63,7 @@ export const setValidForm = () => {
     }
   });
 
-  // Синхронизация полей «Количество комнат» и «Количество мест» (Задание 8.1)
+  // Синхронизация полей «Количество комнат» и «Количество мест»
   const enableGuests = (selectedRooms) => {
     reversedGuests.forEach((guest, index) => {
       if (index <= selectedRooms && index !== 0 && selectedRooms !== '100') {
@@ -85,7 +86,7 @@ export const setValidForm = () => {
     enableGuests(event.target.value);
   });
 
-  // Синхронизация времени заезда и времени выезда (Задание 8.2)
+  // Синхронизация времени заезда и времени выезда
   const syncTime = (val, currentSelect) => {
     let anotherSelect;
     let anotherOptions;
@@ -106,12 +107,27 @@ export const setValidForm = () => {
     });
   };
 
-  timein.addEventListener('change', (event) => {
-    syncTime(event.target.value, 'in');
+  timein.addEventListener('change', (evt) => {
+    syncTime(evt.target.value, 'in');
   });
 
-  timeout.addEventListener('change', (event) => {
-    syncTime(event.target.value, 'out');
+  timeout.addEventListener('change', (evt) => {
+    syncTime(evt.target.value, 'out');
+  });
+
+  avatar.addEventListener('change', () => {
+    if (avatar.files && avatar.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const avatarImg = document.querySelector('.ad-form-header__preview img');
+        avatarImg.remove();
+        const newImg = document.createElement('img');
+        newImg.className = 'preview-img';
+        newImg.setAttribute('src', evt.target.result);
+        avatarWrap.prepend(newImg);
+      };
+      reader.readAsDataURL(avatar.files[0]);
+    }
   });
 };
 

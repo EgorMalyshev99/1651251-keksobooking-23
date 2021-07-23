@@ -1,13 +1,16 @@
 import {
-  createMap
+  createPins
 } from './create-map.js';
 import {
-  activateFilter
+  setFilterSettings
 } from './filter.js';
 import {
   getData,
   postData
 } from './requests.js';
+import {
+  setActiveFilter
+} from './work-state.js';
 import {
   resetUserForm
 } from './work-with-form.js';
@@ -20,15 +23,16 @@ const adFormSubmit = document.querySelector('.ad-form__submit');
 
 // Успешное получение данных
 export const onGetDataSuccess = (data) => {
-  createMap(data); // Создаем карту с полученными данными
-  activateFilter(data); // Активируем фильтр
+  createPins(data); // Создаем карту с полученными данными
+  setActiveFilter(); // Активируем фильтр
+  setFilterSettings(data); // Активируем настройки фильтра
 };
 
 // Ошибка получения данных
 export const onGetDataFail = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.error-downloading')) {
-    messageWrapper.prepend(errorDownloadMessage);
+    messageWrapper.append(errorDownloadMessage);
   }
 
   const errDownloadContent = document.querySelector('.error-downloading');
@@ -50,30 +54,20 @@ export const onGetDataFail = () => {
 export const onSentDataSuccess = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.success')) {
-    messageWrapper.prepend(successPostMessage);
+    messageWrapper.append(successPostMessage);
   }
 
   const successContent = document.querySelector('.success');
 
-  // Отображение сообщения пользователю
-  successContent.style.display = 'block';
-  successContent.classList.add('active');
-
-  // Плавное исчезновение сообщения
+  // Bсчезновение сообщения
   if (successContent) {
     successContent.addEventListener('click', () => {
-      successContent.classList.remove('active');
-      setTimeout(() => {
-        successContent.style.display = 'none';
-      }, 4000);
+      successContent.classList.add('hidden');
     });
 
     document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
-        successContent.classList.remove('active');
-        setTimeout(() => {
-          successContent.style.display = 'none';
-        }, 2000);
+        successContent.classList.add('hidden');
       }
     });
   }
@@ -86,7 +80,7 @@ export const onSentDataSuccess = () => {
 export const onSentDataFail = () => {
   // Если сообщение ранее не выводилось
   if (!document.querySelector('.error')) {
-    messageWrapper.prepend(errorPostMessage);
+    messageWrapper.append(errorPostMessage);
   }
 
   const errContent = document.querySelector('.error');
@@ -97,9 +91,19 @@ export const onSentDataFail = () => {
     errContent.classList.remove('hidden');
   }
 
-  // Скрываем сообщение и пытаемся отправить данные ещё раз
+  // Скрываем сообщение по нажатию на кнопку "Попробовать снова",
+  // на область экрана и по нажатию на кнопку клавиатуры "Esc"
   errBtn.addEventListener('click', () => {
     errContent.classList.add('hidden');
-    postData(onSentDataSuccess, onSentDataFail);
+  });
+
+  errContent.addEventListener('click', () => {
+    errContent.classList.add('hidden');
+  });
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      successContent.classList.add('hidden');
+    }
   });
 };

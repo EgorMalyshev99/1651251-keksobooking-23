@@ -1,9 +1,9 @@
 // Получение данных - (задание 11 пункт 1)
 export const getData = (onSuccess, onError) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data', {
-    method: 'GET',
-    credentials: 'same-origin',
-  })
+      method: 'GET',
+      credentials: 'same-origin',
+    })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -21,11 +21,11 @@ export const getData = (onSuccess, onError) => {
 // Отправка данных - (задание 11 пункт 3)
 export const postData = (onSuccess, onError, body) => {
   fetch(
-    'https://23.javascript.pages.academy/keksobooking', {
-      method: 'POST',
-      body,
-    },
-  )
+      'https://23.javascript.pages.academy/keksobooklng', {
+        method: 'POST',
+        body,
+      },
+    )
     .then((response) => {
       if (response.ok) {
         onSuccess();

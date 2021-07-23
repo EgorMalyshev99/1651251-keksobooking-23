@@ -289,15 +289,16 @@ fieldset {
 }
 
 .ad-form-header__preview {
+  flex-shrink: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  justify-content: center;
 
   margin-right: 10px;
-  padding: 0 15px;
 
   width: 70px;
   height: 70px;
@@ -306,6 +307,11 @@ fieldset {
 
   border-radius: 5px;
   background-color: #dadada;
+}
+
+.preview-img {
+  width: 100%;
+  height: auto;
 }
 
 .ad-form__field {
@@ -319,6 +325,8 @@ fieldset {
   margin-top: 0;
   margin-left: 20px;
 }
+
+.ad-form-header__img {}
 
 .ad-form-header__drop-zone {
   height: 70px;
@@ -930,15 +938,6 @@ fieldset {
 /**
  * Сообщения об успешном и неуспешном создании объявления
  */
-
-.success {
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-.success.active {
-  opacity: 1;
-}
 
 .success,
 .error,

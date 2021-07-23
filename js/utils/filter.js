@@ -1,7 +1,5 @@
-// Фильтр
-
 import {
-  createMap
+  createPins
 } from './create-map.js';
 
 const typeSel = document.querySelector('#housing-type');
@@ -9,15 +7,15 @@ const price = document.querySelector('#housing-price');
 const rooms = document.querySelector('#housing-rooms');
 const guests = document.querySelector('#housing-guests');
 
-export const activateFilter = (hotels) => {
+export const setFilterSettings = (hotels) => {
   let filteredHotels = hotels;
 
   typeSel.addEventListener('change', (evt) => {
     if (evt.target.value !== 'any') {
       filteredHotels = hotels.filter((hotel) => hotel.offer.type === evt.target.value);
-      createMap(filteredHotels);
+      createPins(filteredHotels);
     } else {
-      createMap(hotels);
+      createPins(hotels);
     }
   });
 
@@ -36,18 +34,18 @@ export const activateFilter = (hotels) => {
         default:
           break;
       }
-      createMap(filteredHotels);
+      createPins(filteredHotels);
     } else {
-      createMap(hotels);
+      createPins(hotels);
     }
   });
 
   rooms.addEventListener('change', (evt) => {
     if (evt.target.value !== 'any') {
       filteredHotels = hotels.filter((hotel) => hotel.offer.rooms === Number(evt.target.value));
-      createMap(filteredHotels);
+      createPins(filteredHotels);
     } else {
-      createMap(hotels);
+      createPins(hotels);
     }
   });
 
@@ -66,9 +64,9 @@ export const activateFilter = (hotels) => {
         default:
           break;
       }
-      createMap(filteredHotels);
+      createPins(filteredHotels);
     } else {
-      createMap(hotels);
+      createPins(hotels);
     }
   });
 };

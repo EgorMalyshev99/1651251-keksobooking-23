@@ -6,31 +6,26 @@ export const setDisabled = () => {
   mapFilters.classList.add('map__filters--disabled');
 
   [...adForm.children].forEach((element) => {
-    if (element.matches('fieldset')) {
-      element.setAttribute('disabled', 'true');
-    }
+    element.setAttribute('disabled', 'true');
   });
 
   [...mapFilters.children].forEach((element) => {
-    if (element.matches('fieldset')) {
-      element.setAttribute('disabled', 'true');
-    }
+    element.setAttribute('disabled', 'true');
   });
 };
 
-export const setActive = () => {
+export const setActiveAdForm = () => {
   adForm.classList.remove('ad-form--disabled');
-  mapFilters.classList.remove('map__filters--disabled');
 
   [...adForm.children].forEach((element) => {
-    if (element.matches('fieldset')) {
-      element.removeAttribute('disabled', 'true');
-    }
+    element.removeAttribute('disabled');
   });
+};
+
+export const setActiveFilter = () => {
+  mapFilters.classList.remove('map__filters--disabled');
 
   [...mapFilters.children].forEach((element) => {
-    if (element.matches('fieldset')) {
-      element.removeAttribute('disabled', 'true');
-    }
+    element.removeAttribute('disabled');
   });
 };
