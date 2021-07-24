@@ -1,6 +1,15 @@
 import {
+  TIMEOUT
+} from '../data.js';
+import {
   HOTELS
 } from './data-events.js';
+import {
+  setActiveAdForm,
+  setActiveFilter,
+  setDisabled,
+  setDisabledFilterForm
+} from './work-state.js';
 import {
   createPins
 } from './work-with-map.js';
@@ -100,5 +109,7 @@ export const getFilteredData = (hotels) => {
 };
 
 filterForm.addEventListener('change', () => {
+  setDisabledFilterForm();
+  setTimeout(setActiveFilter, TIMEOUT);
   createPins(getFilteredData(HOTELS));
 });

@@ -13,6 +13,7 @@ const HOUSE_PRICE = 5000;
 const PALACE_PRICE = 10000;
 const HOTEL_PRICE = 3000;
 const MAP_ZOOM = 12;
+const TIMEOUT = 500;
 
 export {
   DEFAULT_COORDINATES,
@@ -26,5 +27,6 @@ export {
   HOUSE_PRICE,
   PALACE_PRICE,
   HOTEL_PRICE,
-  MAP_ZOOM
+  MAP_ZOOM,
+  TIMEOUT
 };
