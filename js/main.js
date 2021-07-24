@@ -15,7 +15,7 @@ import {
 } from './utils/work-with-form.js';
 import {
   initMap
-} from './utils/create-map.js';
+} from './utils/work-with-map.js';
 
 setDisabled(); // Дизейблим форму
 initMap(); // Инициализируем карту

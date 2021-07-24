@@ -1,72 +1,104 @@
 import {
+  HOTELS
+} from './data-events.js';
+import {
   createPins
-} from './create-map.js';
+} from './work-with-map.js';
 
-const typeSel = document.querySelector('#housing-type');
-const price = document.querySelector('#housing-price');
-const rooms = document.querySelector('#housing-rooms');
-const guests = document.querySelector('#housing-guests');
+const filterForm = document.querySelector('.map__filters');
 
-export const setFilterSettings = (hotels) => {
+export const getFilteredData = (hotels) => {
+  // Установленные в фильтре пороги цен
+  const LOW_COST = 10000;
+  const HIGH_COST = 50000;
+  const selectedType = document.querySelector('#housing-type').value;
+  const selectedPrice = document.querySelector('#housing-price').value;
+  const selectedRooms = document.querySelector('#housing-rooms').value;
+  const selectedGuests = document.querySelector('#housing-guests').value;
+
   let filteredHotels = hotels;
 
-  typeSel.addEventListener('change', (evt) => {
-    if (evt.target.value !== 'any') {
-      filteredHotels = hotels.filter((hotel) => hotel.offer.type === evt.target.value);
-      createPins(filteredHotels);
-    } else {
-      createPins(hotels);
-    }
-  });
+  // Выбранный тип жилья
+  if (!(selectedType === 'any')) {
+    filteredHotels = filteredHotels.filter((hotel) => hotel.offer.type === selectedType);
+  }
 
-  price.addEventListener('change', (evt) => {
-    if (evt.target.value !== 'any') {
-      switch (evt.target.value) {
+  // Выбранный ценовой интервал
+  if (!(selectedPrice === 'any')) {
+    filteredHotels = filteredHotels.filter((hotel) => {
+      switch (selectedPrice) {
         case 'low':
-          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) <= 10000);
+          if (hotel.offer.price <= LOW_COST) {
+            return true;
+          }
           break;
         case 'middle':
-          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) >= 10000 && Number(hotel.offer.price) <= 50000);
+          if (hotel.offer.price >= LOW_COST && hotel.offer.price <= HIGH_COST) {
+            return true;
+          }
           break;
         case 'high':
-          filteredHotels = hotels.filter((hotel) => Number(hotel.offer.price) >= 50000);
+          if (hotel.offer.price >= HIGH_COST) {
+            return true;
+          }
           break;
         default:
           break;
       }
-      createPins(filteredHotels);
-    } else {
-      createPins(hotels);
-    }
-  });
+    });
+  }
 
-  rooms.addEventListener('change', (evt) => {
-    if (evt.target.value !== 'any') {
-      filteredHotels = hotels.filter((hotel) => hotel.offer.rooms === Number(evt.target.value));
-      createPins(filteredHotels);
-    } else {
-      createPins(hotels);
-    }
-  });
+  // Выбранное количество комнат
+  if (!(selectedRooms === 'any')) {
+    filteredHotels = filteredHotels.filter((hotel) => hotel.offer.rooms === Number(selectedRooms));
+  }
 
-  guests.addEventListener('change', (evt) => {
-    if (evt.target.value !== 'any') {
-      switch (evt.target.value) {
+  // Выбранное количество гостей
+  if (!(selectedGuests === 'any')) {
+    filteredHotels = filteredHotels.filter((hotel) => {
+      switch (selectedGuests) {
         case '0':
-          filteredHotels = hotels.filter((hotel) => hotel.offer.guests > 2);
+          if (hotel.offer.guests === 'Не для гостей') {
+            return true;
+          }
           break;
         case '1':
-          filteredHotels = hotels.filter((hotel) => hotel.offer.guests === 1);
+          if (hotel.offer.guests === 1) {
+            return true;
+          }
           break;
         case '2':
-          filteredHotels = hotels.filter((hotel) => hotel.offer.guests === 2);
+          if (hotel.offer.guests === 2) {
+            return true;
+          }
           break;
         default:
           break;
       }
-      createPins(filteredHotels);
-    } else {
-      createPins(hotels);
-    }
+    });
+  }
+
+  // Выбранные удобства
+  const selectedFeatures = document.querySelectorAll('.map__features .map__checkbox:checked');
+  let features = [];
+  selectedFeatures.forEach(feature => {
+    features.push(feature.value);
   });
+  if (selectedFeatures.length !== 0) {
+    features.forEach(item => {
+      filteredHotels = filteredHotels.filter((hotel) => {
+        if (hotel.offer.features) {
+          if (hotel.offer.features.includes(item)) {
+            return true;
+          }
+        }
+      });
+    });
+  }
+
+  return filteredHotels;
 };
+
+filterForm.addEventListener('change', () => {
+  createPins(getFilteredData(HOTELS));
+});

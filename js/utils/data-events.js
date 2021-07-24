@@ -1,12 +1,11 @@
 import {
   createPins
-} from './create-map.js';
+} from './work-with-map.js';
 import {
-  setFilterSettings
+  getFilteredData
 } from './filter.js';
 import {
-  getData,
-  postData
+  getData
 } from './requests.js';
 import {
   setActiveFilter
@@ -20,12 +19,14 @@ const errorPostMessage = document.querySelector('#error').content;
 const successPostMessage = document.querySelector('#success').content;
 const messageWrapper = document.querySelector('body');
 const adFormSubmit = document.querySelector('.ad-form__submit');
+let HOTELS;
 
 // Успешное получение данных
 export const onGetDataSuccess = (data) => {
-  createPins(data); // Создаем карту с полученными данными
+  HOTELS = data;
+  createPins(HOTELS); // Создаем карту с полученными данными
   setActiveFilter(); // Активируем фильтр
-  setFilterSettings(data); // Активируем настройки фильтра
+  getFilteredData(data); // Активируем настройки фильтра
 };
 
 // Ошибка получения данных
@@ -106,4 +107,8 @@ export const onSentDataFail = () => {
       successContent.classList.add('hidden');
     }
   });
+};
+
+export {
+  HOTELS
 };

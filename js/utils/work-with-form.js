@@ -2,9 +2,22 @@ import {
   postData
 } from './requests.js';
 import {
+  HOTELS,
   onSentDataFail,
   onSentDataSuccess
 } from './data-events.js';
+import {
+  createPins,
+  initMap
+} from './work-with-map.js';
+import {
+  BUNGALOW_PRICE,
+  DEFAULT_COORDINATES,
+  FLAT_PRICE,
+  HOTEL_PRICE,
+  HOUSE_PRICE,
+  PALACE_PRICE
+} from '../data.js';
 
 const avatar = document.querySelector('#avatar');
 const avatarWrap = document.querySelector('.ad-form-header__preview');
@@ -25,38 +38,41 @@ const timeoutArr = [...timeout];
 const features = document.querySelectorAll('.features__checkbox');
 const description = document.querySelector('#description');
 const images = document.querySelector('#images');
+const imagesWrap = document.querySelector('.ad-form__photo');
 const adForm = document.querySelector('.ad-form');
 const adFormSubmit = document.querySelector('.ad-form__submit');
 const userFormReset = document.querySelector('.ad-form__reset');
+const mapFilters = document.querySelectorAll('.map__filter');
+const mapCheckboxes = document.querySelectorAll('.map__checkbox');
 
 export const setValidForm = () => {
   // Логика выбора типа жилья
   apsType.addEventListener('change', (event) => {
     switch (event.target.value) {
       case 'flat':
-        appsPrice.setAttribute('min', 1000);
+        appsPrice.setAttribute('min', FLAT_PRICE);
         appsPrice.value = '';
-        appsPrice.setAttribute('placeholder', 'от 1000 ₽');
+        appsPrice.setAttribute('placeholder', `от ${FLAT_PRICE} ₽`);
         break;
       case 'bungalow':
-        appsPrice.setAttribute('min', 0);
+        appsPrice.setAttribute('min', BUNGALOW_PRICE);
         appsPrice.value = '';
-        appsPrice.setAttribute('placeholder', 'от 0 ₽');
+        appsPrice.setAttribute('placeholder', `от ${BUNGALOW_PRICE} ₽`);
         break;
       case 'house':
-        appsPrice.setAttribute('min', 5000);
+        appsPrice.setAttribute('min', HOUSE_PRICE);
         appsPrice.value = '';
-        appsPrice.setAttribute('placeholder', 'от 5000 ₽');
+        appsPrice.setAttribute('placeholder', `от ${HOUSE_PRICE} ₽`);
         break;
       case 'palace':
-        appsPrice.setAttribute('min', 10000);
+        appsPrice.setAttribute('min', PALACE_PRICE);
         appsPrice.value = '';
-        appsPrice.setAttribute('placeholder', 'от 10000 ₽');
+        appsPrice.setAttribute('placeholder', `от ${PALACE_PRICE} ₽`);
         break;
       case 'hotel':
-        appsPrice.setAttribute('min', 3000);
+        appsPrice.setAttribute('min', HOTEL_PRICE);
         appsPrice.value = '';
-        appsPrice.setAttribute('placeholder', 'от 3000 ₽');
+        appsPrice.setAttribute('placeholder', `от ${HOTEL_PRICE} ₽`);
         break;
       default:
         break;
@@ -121,12 +137,25 @@ export const setValidForm = () => {
       reader.onload = (evt) => {
         const avatarImg = document.querySelector('.ad-form-header__preview img');
         avatarImg.remove();
-        const newImg = document.createElement('img');
-        newImg.className = 'preview-img';
-        newImg.setAttribute('src', evt.target.result);
-        avatarWrap.prepend(newImg);
+        const newAvatarImg = document.createElement('img');
+        newAvatarImg.className = 'preview-img';
+        newAvatarImg.setAttribute('src', evt.target.result);
+        avatarWrap.prepend(newAvatarImg);
       };
       reader.readAsDataURL(avatar.files[0]);
+    }
+  });
+
+  images.addEventListener('change', () => {
+    if (images.files && images.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const newImagesImg = document.createElement('img');
+        newImagesImg.className = 'preview-img';
+        newImagesImg.setAttribute('src', evt.target.result);
+        imagesWrap.prepend(newImagesImg);
+      };
+      reader.readAsDataURL(images.files[0]);
     }
   });
 };
@@ -144,6 +173,10 @@ const setCurrentOption = (arr, index) => {
 
 // Функция сброса формы создания объявления
 export const resetUserForm = () => {
+  const {
+    defaultLat,
+    defaultLng
+  } = DEFAULT_COORDINATES;
   // Аватар
   avatar.value = '';
 
@@ -151,7 +184,8 @@ export const resetUserForm = () => {
   title.value = '';
 
   // Координаты
-  address.value = address.defaultValue;
+  initMap();
+  address.value = `${defaultLat}, ${defaultLng}`;
 
   // Тип жилья
   setCurrentOption(apsOptions, 0);
@@ -185,6 +219,20 @@ export const resetUserForm = () => {
 
   // Фото жилья
   images.value = '';
+
+  // Сброс селектов фильтра
+  mapFilters.forEach((filter) => {
+    filter.value = 'any';
+  });
+
+  // Сброс чекбоксов фильтра
+  mapCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked === true) {
+      checkbox.checked = false;
+    }
+  });
+
+  createPins(HOTELS);
 };
 
 // Функция переопределения логики кнопки "Опубликовать"

@@ -8,69 +8,110 @@ export const createPopup = ({
 
   const cloneCard = cardTemplate.cloneNode(true);
 
+  // Название
   const title = cloneCard.querySelector('.popup__title');
-  title.textContent = offer.title;
-
-  const address = cloneCard.querySelector('.popup__text--address');
-  address.textContent = `${location.lat}, ${location.lng}`;
-
-  const price = cloneCard.querySelector('.popup__text--price');
-  price.textContent = `${offer.price} ₽/ночь`;
-
-  const type = cloneCard.querySelector('.popup__type');
-  switch (offer.type) {
-    case 'flat':
-      type.textContent = 'Квартира';
-      break;
-    case 'bungalow':
-      type.textContent = 'Бунгало';
-      break;
-    case 'house':
-      type.textContent = 'Дом';
-      break;
-    case 'palace':
-      type.textContent = 'Дворец';
-      break;
-    case 'hotel':
-      type.textContent = 'Отель';
-      break;
-    default:
-      break;
+  if (offer.title) {
+    title.textContent = offer.title;
+  } else {
+    title.remove();
   }
 
+  // Адрес (координаты)
+  const address = cloneCard.querySelector('.popup__text--address');
+  if (location.lat && location.lng) {
+    address.textContent = `${location.lat}, ${location.lng}`;
+  } else {
+    address.remove();
+  }
+
+  // Цена за ночь
+  const price = cloneCard.querySelector('.popup__text--price');
+  if (offer.price) {
+    price.textContent = `${offer.price} ₽/ночь`;
+  } else {
+    price.remove();
+  }
+
+  // Тип жилья
+  const type = cloneCard.querySelector('.popup__type');
+  if (offer.type) {
+    switch (offer.type) {
+      case 'flat':
+        type.textContent = 'Квартира';
+        break;
+      case 'bungalow':
+        type.textContent = 'Бунгало';
+        break;
+      case 'house':
+        type.textContent = 'Дом';
+        break;
+      case 'palace':
+        type.textContent = 'Дворец';
+        break;
+      case 'hotel':
+        type.textContent = 'Отель';
+        break;
+      default:
+        break;
+    }
+  } else {
+    type.remove();
+  }
+
+  // Количество комнат и гостей
   const capacity = cloneCard.querySelector('.popup__text--capacity');
-  capacity.textContent = `${offer.rooms} комнат(ы) для ${offer.guests}`;
+  if (offer.rooms && offer.guests) {
+    capacity.textContent = `${offer.rooms} комнат(ы) для ${offer.guests} гостей`;
+  } else {
+    capacity.remove();
+  }
 
+  // Время заезда и выезда
   const time = cloneCard.querySelector('.popup__text--time');
-  time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  if (offer.checkin && offer.checkout) {
+    time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  } else {
+    time.remove();
+  }
 
+  // Удобства
   const features = cloneCard.querySelector('.popup__features');
-  features.innerHTML = '';
   if (offer.features) {
+    features.innerHTML = '';
     offer.features.forEach((feature) => {
       const featuresItem = document.createElement('li');
       featuresItem.className = `popup__feature popup__feature--${feature}`;
       featuresItem.textContent = feature;
       features.append(featuresItem);
     });
+  } else {
+    features.remove();
   }
 
   const description = cloneCard.querySelector('.popup__description');
-  description.textContent = offer.description;
+  if (offer.description) {
+    description.textContent = offer.description;
+  }
 
   const photos = cloneCard.querySelector('.popup__photos');
-  photos.innerHTML = '';
   if (offer.photos) {
+    photos.innerHTML = '';
     offer.photos.forEach((photo) => {
       const photosItem = document.createElement('img');
       photosItem.className = 'popup__photo';
       photosItem.src = photo;
       photos.append(photosItem);
     });
+  } else {
+    photos.remove();
   }
 
   const avatar = cloneCard.querySelector('.popup__avatar');
-  avatar.src = author.avatar;
+  if (author.avatar) {
+    avatar.src = author.avatar;
+  } else {
+    avatar.remove();
+  }
 
   const popupWrapper = document.createElement('div');
   popupWrapper.className = 'hotel';

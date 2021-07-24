@@ -14,6 +14,7 @@ export const getData = (onSuccess, onError) => {
       onSuccess(hotels);
     })
     .catch((err) => {
+      console.log(err);
       onError(err);
     });
 };
