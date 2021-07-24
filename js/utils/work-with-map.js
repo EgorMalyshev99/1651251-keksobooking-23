@@ -35,7 +35,7 @@ export const initMainMarker = () => {
     iconAnchor: MAIN_MARKER_ANCHOR,
   });
   // Инициализация главного маркера
-  let mainMarker = L.marker({
+  const mainMarker = L.marker({
     lat: defaultLat,
     lng: defaultLng,
   }, {
@@ -54,7 +54,7 @@ export const initMainMarker = () => {
   });
 
   return mainMarker;
-}
+};
 
 // Инициализация карты
 export const initMap = () => {

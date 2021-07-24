@@ -5,9 +5,7 @@ import {
   HOTELS
 } from './data-events.js';
 import {
-  setActiveAdForm,
   setActiveFilter,
-  setDisabled,
   setDisabledFilterForm
 } from './work-state.js';
 import {
@@ -89,12 +87,12 @@ export const getFilteredData = (hotels) => {
 
   // Выбранные удобства
   const selectedFeatures = document.querySelectorAll('.map__features .map__checkbox:checked');
-  let features = [];
-  selectedFeatures.forEach(feature => {
+  const features = [];
+  selectedFeatures.forEach((feature) => {
     features.push(feature.value);
   });
   if (selectedFeatures.length !== 0) {
-    features.forEach(item => {
+    features.forEach((item) => {
       filteredHotels = filteredHotels.filter((hotel) => {
         if (hotel.offer.features) {
           if (hotel.offer.features.includes(item)) {

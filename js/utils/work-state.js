@@ -6,14 +6,14 @@ export const setDisabledAdForm = () => {
   [...adForm.children].forEach((element) => {
     element.setAttribute('disabled', 'true');
   });
-}
+};
 
 export const setDisabledFilterForm = () => {
   mapFilters.classList.add('map__filters--disabled');
   [...mapFilters.children].forEach((element) => {
     element.setAttribute('disabled', 'true');
   });
-}
+};
 
 export const setActiveAdForm = () => {
   adForm.classList.remove('ad-form--disabled');

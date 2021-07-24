@@ -1,3 +1,5 @@
+const GET_LINK = 'https://23.javascript.pages.academy/keksobooking/data';
+const POST_LINK = 'https://23.javascript.pages.academy/keksobooking';
 const DEFAULT_COORDINATES = {
   defaultLat: 35.68950,
   defaultLng: 139.69171,
@@ -16,6 +18,8 @@ const MAP_ZOOM = 12;
 const TIMEOUT = 500;
 
 export {
+  GET_LINK,
+  POST_LINK,
   DEFAULT_COORDINATES,
   MARKERS_COUNT,
   MAIN_MARKER_SIZE,

@@ -13,6 +13,9 @@ import {
 import {
   resetUserForm
 } from './work-with-form.js';
+import {
+  isEscEvent
+} from './check-events.js';
 
 const errorDownloadMessage = document.querySelector('#error-downloading').content;
 const errorPostMessage = document.querySelector('#error').content;
@@ -39,16 +42,19 @@ export const onGetDataFail = () => {
   const errDownloadContent = document.querySelector('.error-downloading');
   const downloadBtn = document.querySelector('.error-downloading__button');
 
-  // Показываем сообщение с помощью удаления класса "hidden" (если ранее он был добавлен)
+  // Показываем сообщение
   if (errDownloadContent.classList.contains('hidden')) {
     errDownloadContent.classList.remove('hidden');
   }
 
-  // Скрываем сообщение и пытаемся получить данные ещё раз
-  downloadBtn.addEventListener('click', () => {
-    errDownloadContent.classList.add('hidden');
-    getData(onGetDataSuccess, onGetDataFail);
-  });
+  const onDownloadMessageClose = () => {
+    errDownloadContent.classList.add('hidden'); // Скрывает
+    getData(onGetDataSuccess, onGetDataFail); // Снова пытаемся получить данные
+    downloadBtn.removeEventListener('click', onDownloadMessageClose); // Удаляет Event Listener
+  };
+
+  // Добавляет Event Listener
+  downloadBtn.addEventListener('click', onDownloadMessageClose);
 };
 
 // Успешная отправка данных
@@ -59,22 +65,27 @@ export const onSentDataSuccess = () => {
   }
 
   const successContent = document.querySelector('.success');
-
-  // Bсчезновение сообщения
-  if (successContent) {
-    successContent.addEventListener('click', () => {
+  const onSuccessMessageClose = () => {
+    successContent.classList.add('hidden');
+    successContent.removeEventListener('click', onSuccessMessageClose);
+  };
+  const onSuccessMessageEsc = (evt) => {
+    if (isEscEvent(evt)) {
       successContent.classList.add('hidden');
-    });
+      document.removeEventListener('keydown', onSuccessMessageEsc);
+    }
+  };
 
-    document.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Escape') {
-        successContent.classList.add('hidden');
-      }
-    });
+  // Закрытие сообщения
+  if (successContent) {
+    successContent.addEventListener('click', onSuccessMessageClose);
+    document.addEventListener('keydown', onSuccessMessageEsc);
   }
 
   resetUserForm(); // Значения инпутов устанавливаем по дефолту
   adFormSubmit.removeAttribute('disabled'); // Активируем кнопку "Опубликовать"
+
+  resetUserForm();
 };
 
 // Ошибка отправки данных
@@ -87,26 +98,36 @@ export const onSentDataFail = () => {
   const errContent = document.querySelector('.error');
   const errBtn = document.querySelector('.error__button');
 
-  // Показываем сообщение с помощью удаления класса "hidden" (если ранее он был добавлен)
+  // Показываем сообщение с помощью удаления класса "hidden"
   if (errContent.classList.contains('hidden')) {
     errContent.classList.remove('hidden');
   }
 
+  const onErrorMessageClose = () => {
+    errContent.classList.add('hidden');
+    adFormSubmit.removeAttribute('disabled'); // Активируем кнопку "Опубликовать"
+    errBtn.removeEventListener('click', onErrorMessageClose);
+  };
+  const onErrorMessageExit = () => {
+    errContent.classList.add('hidden');
+    adFormSubmit.removeAttribute('disabled'); // Активируем кнопку "Опубликовать"
+    errContent.removeEventListener('click', onErrorMessageClose);
+  };
+  const onErrorMessageEsc = (evt) => {
+    if (isEscEvent(evt)) {
+      errContent.classList.add('hidden');
+      adFormSubmit.removeAttribute('disabled'); // Активируем кнопку "Опубликовать"
+      document.removeEventListener('keydown', onErrorMessageEsc);
+    }
+  };
+
   // Скрываем сообщение по нажатию на кнопку "Попробовать снова",
   // на область экрана и по нажатию на кнопку клавиатуры "Esc"
-  errBtn.addEventListener('click', () => {
-    errContent.classList.add('hidden');
-  });
+  errBtn.addEventListener('click', onErrorMessageClose);
 
-  errContent.addEventListener('click', () => {
-    errContent.classList.add('hidden');
-  });
+  errContent.addEventListener('click', onErrorMessageExit);
 
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      successContent.classList.add('hidden');
-    }
-  });
+  document.addEventListener('keydown', onErrorMessageEsc);
 };
 
 export {

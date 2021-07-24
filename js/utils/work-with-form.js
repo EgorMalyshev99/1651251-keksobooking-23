@@ -3,8 +3,8 @@ import {
 } from './requests.js';
 import {
   HOTELS,
-  onSentDataFail,
-  onSentDataSuccess
+  onSentDataSuccess,
+  onSentDataFail
 } from './data-events.js';
 import {
   createPins,
@@ -44,6 +44,8 @@ const adFormSubmit = document.querySelector('.ad-form__submit');
 const userFormReset = document.querySelector('.ad-form__reset');
 const mapFilters = document.querySelectorAll('.map__filter');
 const mapCheckboxes = document.querySelectorAll('.map__checkbox');
+let avatarImg;
+let newImagesImg;
 
 export const setValidForm = () => {
   // Логика выбора типа жилья
@@ -135,8 +137,8 @@ export const setValidForm = () => {
     if (avatar.files && avatar.files[0]) {
       const reader = new FileReader();
       reader.onload = (evt) => {
-        const avatarImg = document.querySelector('.ad-form-header__preview img');
-        avatarImg.remove();
+        avatarImg = document.querySelector('.ad-form-header__preview img');
+        avatarImg.classList.add('hidden');
         const newAvatarImg = document.createElement('img');
         newAvatarImg.className = 'preview-img';
         newAvatarImg.setAttribute('src', evt.target.result);
@@ -150,7 +152,7 @@ export const setValidForm = () => {
     if (images.files && images.files[0]) {
       const reader = new FileReader();
       reader.onload = (evt) => {
-        const newImagesImg = document.createElement('img');
+        newImagesImg = document.createElement('img');
         newImagesImg.className = 'preview-img';
         newImagesImg.setAttribute('src', evt.target.result);
         imagesWrap.prepend(newImagesImg);
@@ -175,10 +177,12 @@ const setCurrentOption = (arr, index) => {
 export const resetUserForm = () => {
   const {
     defaultLat,
-    defaultLng
+    defaultLng,
   } = DEFAULT_COORDINATES;
   // Аватар
   avatar.value = '';
+  avatarImg.classList.remove('hidden');
+  avatarImg.setAttribute('src', 'img/muffin-grey.svg');
 
   // Заголовок
   title.value = '';
@@ -219,6 +223,11 @@ export const resetUserForm = () => {
 
   // Фото жилья
   images.value = '';
+  if (document.querySelector('.preview-img')) {
+    document.querySelectorAll('.preview-img').forEach((img) => {
+      img.remove();
+    });
+  }
 
   // Сброс селектов фильтра
   mapFilters.forEach((filter) => {
