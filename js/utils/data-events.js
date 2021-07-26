@@ -11,7 +11,7 @@ import {
   setActiveFilter
 } from './work-state.js';
 import {
-  resetUserForm,
+  resetUserForm
 } from './work-with-form.js';
 import {
   isEscEvent

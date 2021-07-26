@@ -12,7 +12,9 @@ import {
   MAP_ZOOM,
   MARKERS_COUNT,
   PIN_ANCHOR,
-  PIN_SIZE
+  PIN_SIZE,
+  TITLE_LAYER_ATTRIBUTION,
+  TITLE_LAYER_URL
 } from '../data.js';
 import {
   getData
@@ -84,8 +86,8 @@ export const initMap = () => {
         lng: defaultLng,
       }, MAP_ZOOM);
     L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      TITLE_LAYER_URL, {
+        attribution: TITLE_LAYER_ATTRIBUTION,
       },
     ).addTo(map);
   }

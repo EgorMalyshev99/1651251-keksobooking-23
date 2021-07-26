@@ -6,9 +6,9 @@ import {
 // Получение данных
 export const getData = (onSuccess, onError) => {
   fetch(GET_LINK, {
-      method: 'GET',
-      credentials: 'same-origin',
-    })
+    method: 'GET',
+    credentials: 'same-origin',
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -26,11 +26,11 @@ export const getData = (onSuccess, onError) => {
 // Отправка данных
 export const postData = (onSuccess, onError, body) => {
   fetch(
-      POST_LINK, {
-        method: 'POST',
-        body,
-      },
-    )
+    POST_LINK, {
+      method: 'POST',
+      body,
+    },
+  )
     .then((response) => {
       if (response.ok) {
         return onSuccess();

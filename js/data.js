@@ -1,6 +1,8 @@
 const GET_LINK = 'https://23.javascript.pages.academy/keksobooking/data';
 const POST_LINK = 'https://23.javascript.pages.academy/keksobooking';
 const MAIN_ICON_PATH = './img/main-pin.svg';
+const TITLE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TITLE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const DEFAULT_COORDINATES = {
   defaultLat: 35.68950,
   defaultLng: 139.69171,
@@ -22,6 +24,8 @@ export {
   GET_LINK,
   POST_LINK,
   MAIN_ICON_PATH,
+  TITLE_LAYER_URL,
+  TITLE_LAYER_ATTRIBUTION,
   DEFAULT_COORDINATES,
   MARKERS_COUNT,
   MAIN_MARKER_SIZE,
