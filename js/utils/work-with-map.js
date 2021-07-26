@@ -6,6 +6,7 @@ import {
 } from './create-popup.js';
 import {
   DEFAULT_COORDINATES,
+  MAIN_ICON_PATH,
   MAIN_MARKER_ANCHOR,
   MAIN_MARKER_SIZE,
   MAP_ZOOM,
@@ -13,6 +14,13 @@ import {
   PIN_ANCHOR,
   PIN_SIZE
 } from '../data.js';
+import {
+  getData
+} from './requests.js';
+import {
+  onGetDataFail,
+  onGetDataSuccess
+} from './data-events.js';
 
 const address = document.querySelector('#address');
 let map;
@@ -30,7 +38,7 @@ export const initMainMarker = () => {
   } = DEFAULT_COORDINATES;
   // Кастомный маркер -
   mainPinIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
+    iconUrl: MAIN_ICON_PATH,
     iconSize: MAIN_MARKER_SIZE,
     iconAnchor: MAIN_MARKER_ANCHOR,
   });
@@ -69,6 +77,7 @@ export const initMap = () => {
     map = L.map('map-canvas')
       .on('load', () => {
         setActiveAdForm();
+        getData(onGetDataSuccess, onGetDataFail); // Получаем данные отелей с сервера
       })
       .setView({
         lat: defaultLat,

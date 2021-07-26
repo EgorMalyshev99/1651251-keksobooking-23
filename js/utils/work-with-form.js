@@ -32,9 +32,9 @@ const capacity = document.querySelector('#capacity');
 const guests = [...capacity.children];
 const reversedGuests = guests.slice().reverse();
 const timein = document.querySelector('#timein');
-const timeinArr = [...timein];
+const timeins = [...timein];
 const timeout = document.querySelector('#timeout');
-const timeoutArr = [...timeout];
+const timeouts = [...timeout];
 const features = document.querySelectorAll('.features__checkbox');
 const description = document.querySelector('#description');
 const images = document.querySelector('#images');
@@ -53,27 +53,27 @@ export const setValidForm = () => {
     switch (event.target.value) {
       case 'flat':
         appsPrice.setAttribute('min', FLAT_PRICE);
-        appsPrice.value = '';
+        // appsPrice.value = '';
         appsPrice.setAttribute('placeholder', `от ${FLAT_PRICE} ₽`);
         break;
       case 'bungalow':
         appsPrice.setAttribute('min', BUNGALOW_PRICE);
-        appsPrice.value = '';
+        // appsPrice.value = '';
         appsPrice.setAttribute('placeholder', `от ${BUNGALOW_PRICE} ₽`);
         break;
       case 'house':
         appsPrice.setAttribute('min', HOUSE_PRICE);
-        appsPrice.value = '';
+        // appsPrice.value = '';
         appsPrice.setAttribute('placeholder', `от ${HOUSE_PRICE} ₽`);
         break;
       case 'palace':
         appsPrice.setAttribute('min', PALACE_PRICE);
-        appsPrice.value = '';
+        // appsPrice.value = '';
         appsPrice.setAttribute('placeholder', `от ${PALACE_PRICE} ₽`);
         break;
       case 'hotel':
         appsPrice.setAttribute('min', HOTEL_PRICE);
-        appsPrice.value = '';
+        // appsPrice.value = '';
         appsPrice.setAttribute('placeholder', `от ${HOTEL_PRICE} ₽`);
         break;
       default:
@@ -110,10 +110,10 @@ export const setValidForm = () => {
     let anotherOptions;
     if (currentSelect === 'in') {
       anotherSelect = timeout;
-      anotherOptions = timeoutArr;
+      anotherOptions = timeouts;
     } else if (currentSelect === 'out') {
       anotherSelect = timein;
-      anotherOptions = timeinArr;
+      anotherOptions = timeins;
     }
     anotherSelect.value = val;
     anotherOptions.forEach((time) => {
@@ -206,11 +206,11 @@ export const resetUserForm = () => {
   capacity.value = '1';
 
   // Время заезда
-  setCurrentOption(timeinArr, 0);
+  setCurrentOption(timeins, 0);
   timein.value = '12:00';
 
   // Время выезда
-  setCurrentOption(timeoutArr, 0);
+  setCurrentOption(timeouts, 0);
   timeout.value = '12:00';
 
   // Удобства

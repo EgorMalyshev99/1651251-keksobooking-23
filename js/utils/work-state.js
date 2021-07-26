@@ -1,3 +1,9 @@
+import {
+  setUserFormReset,
+  setUserFormSubmit,
+  setValidForm
+} from "./work-with-form.js";
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
@@ -21,6 +27,10 @@ export const setActiveAdForm = () => {
   [...adForm.children].forEach((element) => {
     element.removeAttribute('disabled');
   });
+
+  setValidForm(); // Подключаем валидацию формы
+  setUserFormSubmit(); // Установка новой логики отправки формы объявления
+  setUserFormReset(); // Установка новой логики сброса формы объявления
 };
 
 export const setActiveFilter = () => {

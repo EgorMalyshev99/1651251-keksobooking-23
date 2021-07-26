@@ -11,7 +11,7 @@ import {
   setActiveFilter
 } from './work-state.js';
 import {
-  resetUserForm
+  resetUserForm,
 } from './work-with-form.js';
 import {
   isEscEvent
@@ -27,7 +27,7 @@ let HOTELS;
 // Успешное получение данных
 export const onGetDataSuccess = (data) => {
   HOTELS = data;
-  createPins(HOTELS); // Создаем карту с полученными данными
+  createPins(HOTELS); // Выводим метки отелей на карту
   setActiveFilter(); // Активируем фильтр
   getFilteredData(data); // Активируем настройки фильтра
 };
